@@ -1,0 +1,8 @@
+.tabs,
+#header,
+#footer-wrapper,
+.breadcrumb,
+.region.region-page-top,
+.pager {
+  display: none;
+}

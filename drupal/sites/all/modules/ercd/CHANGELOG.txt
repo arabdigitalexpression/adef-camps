@@ -1,0 +1,13 @@
+Entity Reference Cascade Delete 2013-04-13
+Issue #1918786 by drupalok: Updated the way that users select entities when the default state is unselected.
+Issue #1922116 by drupalok: Added "Cascade Delete" button to form to better separate from regular delete.
+
+Entity Reference Cascade Delete 2013-03-02
+Issue #1911142 by sw3b: Added a feature to "force" cascade deletion without the user having to select items. Also added feature to set the default states of checkboxes to either selected or unselected.
+
+Entity Reference Cascade Delete 2013-02-03
+------------------------------------------
+by atozstudio: Changed the default state of the entity checkboxes to unselected.
+by atozstudio: Added support for file entities if using the File Entity module.
+by atozstudio: Added support for comment entities.
+by atozstudio: Changed how we flag which entities to work with.

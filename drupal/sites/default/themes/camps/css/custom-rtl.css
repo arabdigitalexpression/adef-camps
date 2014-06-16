@@ -1,0 +1,66 @@
+.term-reference-tree-button,
+.no-term-reference-tree-button {
+  margin-left: 4px;
+  margin-right: 0;
+}
+
+.item-list .field-widget-term-reference-tree ul ul,
+.block .field-widget-term-reference-tree ul ul,
+.field-widget-term-reference-tree ul ul {
+  margin-right: 1.5em;
+  margin-left: 0;
+}
+
+.term-reference-tree-track-list li {
+  margin-right: 10px;
+  padding-right: 20px;
+  margin-left: 0;
+  padding-left: 0;
+}
+
+#available-sessions .session,
+#available-sessions h3,
+.schedule .session,
+.schedule .view-content h3 {
+  float: right;
+  padding: 5px 0 5px 5px;
+}
+
+ul.grid li {
+  float: right;
+}
+
+.date-nav-wrapper .date-next {
+  left: 0;
+  right: auto;
+  text-align: left;
+}
+
+.date-nav-wrapper .date-prev {
+  right: 0;
+  left: auto;
+  text-align: right;
+}
+
+ul.grid li.small img {
+  float: right;
+}
+
+@media screen and (min-width:769px) {
+  .panel-2col-stacked .panel-col-first,
+  .panel-2col .panel-col-first { 
+    float: right; 
+  }
+
+  .panel-2col-stacked .panel-col-last,
+  .panel-2col .panel-col-last { 
+    float: right; 
+  }
+}
+.panel-2col-stacked .panel-col-first .inside { 
+  margin: 0 0 1em .5;
+}
+
+.panel-2col-stacked .panel-col-last .inside { 
+  margin: 0 .5em 1em 0;
+}

@@ -1,0 +1,86 @@
+<?php
+/**
+ * @file
+ * Install, update, and uninstall functions for the Entity Reference Cascade
+ * Delete module.
+ *
+ * @ingroup ercd
+ */
+
+/**
+ * Implements hook_install().
+ *
+ * Set entities to skip, namely comments and files at this point.
+ */
+function ercd_install() {
+  ercd_set_valid_entities();
+  ercd_set_valid_confirm_forms();
+
+  // Anonymous and administrator roles are immune.
+  $immune_roles = array(DRUPAL_ANONYMOUS_RID => DRUPAL_ANONYMOUS_RID);
+  $administrator_role = variable_get('user_admin_role', NULL);
+  if ($administrator_role != NULL) {
+    $immune_roles[$administrator_role] = $administrator_role;
+  }
+
+  variable_set('ercd_immune_roles', $immune_roles);
+}
+
+/**
+ * Implements hook_uninstall().
+ *
+ * Remove all variables that have been set for the module.
+ *
+ * @see ercd_admin_settings()
+ */
+function ercd_uninstall() {
+  $result = db_query("SELECT name FROM {variable} WHERE name LIKE 'ercd_%'");
+  foreach ($result as $variable) {
+    variable_del($variable->name);
+  }
+}
+
+/**
+ * Remove variable ercd_entities_to_skip and replace with ercd_valid_entites.
+ */
+function ercd_update_7100() {
+  // Rather than selecting what entities to skip, we should select which
+  // entities to include. Otherwise, we won't take into account entities
+  // that may be introduced by other modules.
+  variable_del('ercd_entities_to_skip');
+  ercd_set_valid_entities();
+
+  ercd_set_valid_confirm_forms();
+}
+
+/**
+ * Set the valid entities for this module.
+ */
+function ercd_set_valid_entities() {
+  $valid_entities = array(
+    'node',
+    'taxonomy_term',
+    'taxonomy_vocabulary',
+    'rules_config',
+    'user',
+    'comment',
+    'file',
+  );
+  variable_set('ercd_valid_entities', $valid_entities);
+}
+
+/**
+ * Set valid confirm forms for this module.
+ */
+function ercd_set_valid_confirm_forms() {
+  $valid_confirm_forms = array(
+    'node' => 'node_delete_confirm',
+    'taxonomy_vocabulary' => 'taxonomy_form_vocabulary',
+    'taxonomy_term' => 'taxonomy_form_term',
+    'rules_config' => 'rules_ui_form_rules_config_confirm_op',
+    'user' => 'user_cancel_confirm_form',
+    'comment' => 'comment_confirm_delete',
+    'file' => 'file_entity_delete_form',
+  );
+  variable_set('ercd_valid_confirm_forms', $valid_confirm_forms);
+}
