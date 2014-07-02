@@ -272,7 +272,7 @@ function _adef_camps_badges_render($nid) {
   $terms = $tracks + $goals;
   $system_badges = views_get_view_result('content_blocks', 'block_badges');
   $badges = _adef_camps_get_badges($nid);
-  //drupal_set_message("<pre>" . print_r($badges, TRUE) . "</pre>");
+  drupal_set_message("<pre>" . print_r($badges, TRUE) . "</pre>");
   foreach ($badges as $key => $levels) {
     if (!empty($levels['attendance']) && count($levels['attendance']) >= 2) {
       foreach ($system_badges as $badge) {

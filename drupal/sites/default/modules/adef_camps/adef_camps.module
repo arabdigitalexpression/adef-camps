@@ -24,6 +24,10 @@ function adef_camps_permission() {
       'title' => t('Add Achievments'),
       'description' => t('Add achievements to particpants.')
   );
+  $perms['bulk generate spacetime'] = array(
+      'title' => t('Bulk Create space-time'),
+      'descriptiojn' => t('Has access to admin tool to create bulk space-time slots (zamakan)'),
+  );
   return $perms;
 }
 
@@ -109,7 +113,19 @@ function adef_camps_menu() {
       'title' => 'ADEF Camps',
       'page callback' => 'adef_camps_configure',
       'access arguments' => array('administer settings'),
-      'file' => 'adef_camps_admin.inc'
+      'file' => 'adef_camps_admin.inc',
+  );
+
+  $items['admin/config/system/adefcamps/settings'] = array(
+      'title' => 'Settings',
+      'type' => MENU_DEFAULT_LOCAL_TASK,
+  );
+  $items['admin/config/system/adefcamps/generateslots'] = array(
+      'title' => 'Generate Space-time Slots',
+      'type' => MENU_LOCAL_TASK,
+      'page callback' => 'adef_camps_generate_slots',
+      'access arguments' => array('bulk generate spacetime'),
+      'file' => 'adef_camps_admin.inc',
   );
 
   return $items;
@@ -279,6 +295,8 @@ function adef_camps_get_period_date() {
   }
   $start_date['day'] = $period_day;
   //manual override for 2013
-  if ($start_date['day'] >= 25) {$start_date['day'] += 1;}
+  if ($start_date['day'] >= 25) {
+    $start_date['day'] += 1;
+  }
   return $start_date;
 }
