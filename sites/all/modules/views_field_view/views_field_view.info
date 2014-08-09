@@ -8,9 +8,9 @@ dependencies[] = views
 
 files[] = views_field_view_handler_field_view.inc
 files[] = tests/views_field_view.test
-; Information added by drupal.org packaging script on 2013-06-22
+; Information added by drupal.org packaging script on 2013-10-19
 version = "7.x-1.1+2-dev"
 core = "7.x"
 project = "views_field_view"
-datestamp = "1371867889"
+datestamp = "1382164777"
 

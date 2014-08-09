@@ -9,9 +9,9 @@ files[] = views/birthdays_field_views_handler_filter.inc
 core = 7.x
 package = Fields
 
-; Information added by drupal.org packaging script on 2013-06-28
-version = "7.x-1.0-beta1+44-dev"
+; Information added by Drupal.org packaging script on 2014-05-05
+version = "7.x-1.0-beta1+49-dev"
 core = "7.x"
 project = "birthdays"
-datestamp = "1372423264"
+datestamp = "1399293229"
 

@@ -4,13 +4,12 @@ files[] = job_scheduler.module
 files[] = job_scheduler.install
 files[] = JobScheduler.inc
 files[] = JobSchedulerCronTab.inc
-dependencies[] = trigger
 core = 7.x
 php = 5.2
 
-; Information added by drupal.org packaging script on 2013-06-19
-version = "7.x-2.0-alpha3+4-dev"
+; Information added by Drupal.org packaging script on 2014-01-24
+version = "7.x-2.0-alpha3+8-dev"
 core = "7.x"
 project = "job_scheduler"
-datestamp = "1371651594"
+datestamp = "1390572808"
 

@@ -144,9 +144,9 @@ function countries_import_csv() {
     // The iso3 data.
     $row[1] = empty($row[1]) || $row[1] == 'NULL' ? '' : trim($row[1]);
     // The name data.
-    $row[2] = empty($row[2]) || $row[2] == 'NULL' ? '' : $t(trim($row[2]));
+    $row[2] = empty($row[2]) || $row[2] == 'NULL' ? '' : trim($row[2]);
     // The official name data.
-    $row[3] = empty($row[3]) || $row[3] == 'NULL' ? '' : $t(trim($row[3]));
+    $row[3] = empty($row[3]) || $row[3] == 'NULL' ? '' : trim($row[3]);
     // The number code data.
     $row[4] = empty($row[4]) || $row[4] == 'NULL' ? 0 : trim($row[4]);
     // The continent data.
@@ -308,10 +308,10 @@ function countries_update_7203() {
  *
  * The name field is 100% in sync with the ISO standard with this release.
  */
-function countries_update_7205() {
+function countries_update_7204() {
   $t = get_t();
-  $link = l($t('ISO Newsletter !version', array('!version' => 'VI-14')),
-    'http://www.iso.org/iso/iso_3166-1_newsletter_vi-14_name_change_state_of_palestine.pdf',
+  $link = l($t('ISO Newsletter !version', array('!version' => 'VI-11')),
+    'http://www.iso.org/iso/nl_vi-11_name_change_for_libya.pdf',
     array('external' => 1));
   countries_install_available_update_message($link);
   cache_clear_all();

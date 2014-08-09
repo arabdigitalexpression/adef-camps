@@ -3,6 +3,8 @@
 /**
  * @file
  * Make URLs absolute.
+ *
+ * @todo Use DOM rather than strtr().
  */
 
 $plugin = array(
@@ -29,7 +31,22 @@ function feeds_tamper_absolute_url_callback($result, $item_key, $element_key, &$
     $dom = new DOMDocument();
   }
 
+  $field = (string) $field;
+
+  if (!$field) {
+    return;
+  }
+
+  // Supress warnings for invalid HTML.
+  $errors = libxml_use_internal_errors(TRUE);
+  $entity_loader = libxml_disable_entity_loader(TRUE);
+
   $dom->loadHTML($field);
+
+  libxml_clear_errors();
+  libxml_use_internal_errors($errors);
+  libxml_disable_entity_loader($entity_loader);
+
   $urls = array();
   $tags = array('a' => 'href', 'img' => 'src', 'iframe' => 'src',
                 'script' => 'src', 'object' => 'codebase', 'link' => 'href',
@@ -44,8 +61,13 @@ function feeds_tamper_absolute_url_callback($result, $item_key, $element_key, &$
 }
 
 function _feeds_tamper_absolute_url($r_url, &$urls, $b) {
+  if (!strlen($r_url)) {
+    return;
+  }
+
   $r = parse_url($r_url);
-  if ($r == FALSE) {
+
+  if ($r === FALSE) {
     return;
   }
   if (!empty($r['scheme']) || !empty($r['host'])) {
@@ -107,7 +129,7 @@ function _feeds_tamper_join_url($parts) {
       $url .= '@';
     }
     // IPv6.
-    if (preg_match('/!^[\da-f]*:[\da-f.:]+$!ui/', $parts['host'])) {
+    if (preg_match('/^[\da-f]*:[\da-f.:]+$/ui', $parts['host'])) {
       $url .= '[' . $parts['host'] . ']';
     }
     else {

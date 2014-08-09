@@ -125,7 +125,7 @@ function feeds_tamper_update_7002(&$sandbox) {
  * Add index on importer.
  */
 function feeds_tamper_update_7003(&$sandbox) {
-  if (db_index_exists('feeds_tamper', 'importer', array('importer'))) {
+  if (db_index_exists('feeds_tamper', 'importer')) {
     return;
   }
   db_add_index('feeds_tamper', 'importer', array('importer'));

@@ -13,8 +13,8 @@ function feeds_tamper_ui_list_form($form, &$form_state, $importer) {
   $mappings = $importer->processor->config['mappings'];
 
   if (!$mappings) {
-    $message = 'There are no <a href="/admin/structure/feeds/@importer/mapping">mappings</a> defined for this importer.';
-    drupal_set_message(t($message, array('@importer' => $importer->id)), 'warning');
+    $args = array('@url' => url('admin/structure/feeds/' . $importer->id . '/mapping'));
+    drupal_set_message(t('There are no <a href="@url">mappings</a> defined for this importer.', $args), 'warning');
     return $form;
   }
 
@@ -24,42 +24,40 @@ function feeds_tamper_ui_list_form($form, &$form_state, $importer) {
 
   // Help message at the top. I have a seceret, I added the link back to the
   // mappings because it makes my life a lot easier while testing this.
-  $message = 'Configure plugins to modify Feeds data before it gets saved. Each <a href="/admin/structure/feeds/!importer/mapping">mapping</a> can be manipulated individually.';
-  $message = t($message, array('!importer' => $importer->id));
+  $args = array('@url' => url('admin/structure/feeds/' . $importer->id . '/mapping'));
+  $message = t('Configure plugins to modify Feeds data before it gets saved. Each <a href="@url">mapping</a> can be manipulated individually.', $args);
   $form['help']['#markup'] = '<div class="help"><p>' . $message . '</p></div>';
 
   // Helpful shortcut.
   $form['mappings'] = array();
   $map = &$form['mappings'];
   $form['#importer'] = $importer;
-
-  foreach ($mappings as $mapping) {
+  $mapped = array();
+  foreach ($mappings as $delta => $mapping) {
     $source = $mapping['source'];
     $target = $mapping['target'];
-
-    // Sources may have spaces in them and other nefarious things. Blast you
-    // CSV parser!
-    $i = rawurlencode($source);
 
     // We will skip building the table if it has been built for a source, but we
     // need to add the target label to indicate to the user that more than one
     // field will be affected.
     $target_label = !empty($targets[$target]['name']) ? check_plain($targets[$target]['name']) : check_plain($target);
-
-    $map[$i]['#title']['targets'][] = $target_label;
+    $prev = $delta;
+    if (isset($mapped[$source])) {
+      $prev = $mapped[$source];
+    }
+    $map[$prev]['#title']['targets'][] = $target_label;
     // We don't need to build the table again for this source.
-    if (isset($map[$i]['table'])) {
+    if (isset($mapped[$source])) {
       continue;
     }
-    $source_label = !empty($sources[$source]['name']) ? check_plain($sources[$source]['name']) : check_plain($source);
-    $map[$i]['#title']['source'] = $source_label;
+    $mapped[$source] = $delta;
 
-    $map[$i]['#tree'] = TRUE;
-    $map[$i]['table'] = array();
-    // "Add plugin" link. We are not using l() here so that we can double
-    // encode $source which may contain slashes.
-    $add = url('admin/structure/feeds/' . check_plain($importer->id) . '/tamper/add/' . $i);
-    $map[$i]['#add_link'] = '<a href="' . $add . '">' . t('Add plugin') . '</a>';
+    $source_label = !empty($sources[$source]['name']) ? check_plain($sources[$source]['name']) : check_plain($source);
+    $map[$delta]['#title']['source'] = $source_label;
+
+    $map[$delta]['#tree'] = TRUE;
+    $map[$delta]['table'] = array();
+    $map[$delta]['#add_link'] = l(t('Add plugin'), 'admin/structure/feeds/' . $importer->id . '/tamper/add/' . bin2hex($source));
 
     // There are no plugins for this source. We've built all we need to.
     if (!isset($instances[$source])) {
@@ -69,10 +67,10 @@ function feeds_tamper_ui_list_form($form, &$form_state, $importer) {
 
       // Plugin instance description.
       $description = !empty($instance->description) ? check_plain($instance->description) : $instance->id;
-      $map[$i]['table'][$instance->id]['#description'] = $description;
+      $map[$delta]['table'][$instance->id]['#description'] = $description;
 
       // Weight field.
-      $map[$i]['table'][$instance->id]['weight'] = array(
+      $map[$delta]['table'][$instance->id]['weight'] = array(
         '#type' => 'textfield',
         '#size' => 5,
         '#default_value' => $instance->weight,
@@ -81,7 +79,7 @@ function feeds_tamper_ui_list_form($form, &$form_state, $importer) {
 
       // Name of plugin.
       $plugin = feeds_tamper_get_plugin($instance->plugin_id);
-      $map[$i]['table'][$instance->id]['#name'] = $plugin['name'];
+      $map[$delta]['table'][$instance->id]['#name'] = $plugin['name'];
 
       // Calculate where the plugin lives and it's corresponding operations.
       if ($instance->export_type == EXPORT_IN_CODE) {
@@ -101,7 +99,7 @@ function feeds_tamper_ui_list_form($form, &$form_state, $importer) {
       }
 
       // Status column, Default, Normal, Overridden.
-      $map[$i]['table'][$instance->id]['#status'] = $status;
+      $map[$delta]['table'][$instance->id]['#status'] = $status;
 
       // Build Edit | Delete, Edit | Revert, Override links.
       $ops = l(t($edit), 'admin/structure/feeds/' . $importer->id . '/tamper/' . $instance->id . '/edit');
@@ -112,10 +110,10 @@ function feeds_tamper_ui_list_form($form, &$form_state, $importer) {
         $ops .= l(t($delete), 'admin/structure/feeds/' . $importer->id . '/tamper/' . $instance->id . '/delete');
       }
 
-      $map[$i]['table'][$instance->id]['#edit'] = $ops;
+      $map[$delta]['table'][$instance->id]['#edit'] = $ops;
 
       // Enable/disable checkbox.
-      $map[$i]['table'][$instance->id]['enabled'] = array(
+      $map[$delta]['table'][$instance->id]['enabled'] = array(
         '#type' => 'checkbox',
         '#default_value' => !$instance->disabled,
       );
@@ -294,10 +292,6 @@ function theme_feeds_tamper_ui_list_form($variables) {
  * Add plugin form.
  */
 function feeds_tamper_ui_add_plugin_form($form, &$form_state, $importer, $source) {
-
-  // We double encoded $source before.
-  $source = rawurldecode($source);
-
   // Set importer and source for use in validate and submit.
   $form_state['importer'] = $importer;
   $form_state['source'] = $source;
@@ -341,7 +335,7 @@ function feeds_tamper_ui_add_plugin_form($form, &$form_state, $importer, $source
     ),
     '#submit' => array('feeds_tamper_ui_add_plugin_form_submit'),
     '#value' => t('Choose'),
-    '#attributes' => array('class' => array('no-js', 'html.js')),
+    '#attributes' => array('class' => array('no-js')),
   );
   $form['plugin']['#prefix'] = '<div class="clear-fix" id="feeds-tamper-plugin">';
   $form['plugin']['#suffix'] = '</div>';
@@ -370,12 +364,13 @@ function feeds_tamper_ui_add_plugin_form($form, &$form_state, $importer, $source
     '#type' => 'fieldset',
     '#tree' => TRUE,
   );
-  $form['plugin']['settings'] += $plugin['form']($importer, $source, array());
+  $form['plugin']['settings'] += $plugin['form']($importer, $source, array(), $form_state);
 
   $form['add'] = array(
     '#type' => 'submit',
     '#value' => t('Add'),
   );
+
   return $form;
 }
 
@@ -453,12 +448,15 @@ function feeds_tamper_ui_edit_plugin_form($form, &$form_state, $instance) {
     '#type' => 'fieldset',
     '#tree' => TRUE,
   );
-  $form['settings'] += $plugin['form']($importer, $instance->source, $instance->settings);
+  $form['settings'] += $plugin['form']($importer, $instance->source, $instance->settings, $form_state);
 
   $form['save'] = array(
     '#type' => 'submit',
     '#value' => t('Save'),
   );
+
+  $form['#attached']['css'][] = drupal_get_path('module', 'feeds_tamper_ui') . '/feeds_tamper_ui.css';
+
   return $form;
 }
 

@@ -773,6 +773,12 @@ class RulesEventSet extends RulesRuleSet {
         // Create an event set if not yet done.
         if (!isset($sets[$event_name])) {
           $handler = rules_get_event_handler($event_name, $rule->getEventSettings($event_name));
+
+          // Start the event dispatcher for this event, if any.
+          if ($handler instanceof RulesEventDispatcherInterface && !$handler->isWatching()) {
+            $handler->startWatching();
+          }
+
           // Update the event info with the variables available based on the
           // event settings.
           $event_info = $events[$event_base_name];
@@ -801,10 +807,9 @@ class RulesEventSet extends RulesRuleSet {
       drupal_alter('rules_event_set', $event_name, $set);
       rules_set_cache('event_' . $event_name, $set);
     }
-    // Cache a list of empty sets so we can use it to speed up later calls.
-    // See rules_get_event_set().
-    $empty_events = array_keys(array_diff_key($events, $sets));
-    variable_set('rules_empty_sets', array_flip($empty_events));
+    // Cache a whitelist of configured events so we can use it to speed up later
+    // calls. See rules_invoke_event().
+    variable_set('rules_event_whitelist', array_flip(array_keys($sets)));
   }
 
   protected function stateVariables($element = NULL) {

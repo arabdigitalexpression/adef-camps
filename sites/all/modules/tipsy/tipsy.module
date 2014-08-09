@@ -1,9 +1,9 @@
 <?php
 
 /**
- * Implements hook_init().
+ * Implements hook_page_build().
  */
-function tipsy_init() {
+function tipsy_page_build(&$page) {
   drupal_add_library('tipsy', 'tipsy', TRUE);
 }
 
@@ -41,15 +41,18 @@ function tipsy_library() {
  * Implements hook_menu().
  */
 function tipsy_menu() {
+  $items = array();
+
   $items['admin/config/user-interface/tipsy'] = array(
-    'title' => t("Tipsy"),
-    'description' => t('Integrates tipsy tooltips with Drupal'),
+    'title' => 'Tipsy',
+    'description' => 'Integrates tipsy tooltips with Drupal',
     'page callback' => 'drupal_get_form',
     'access callback' => 'user_access',
     'access arguments' => array('administer tipsy'),
     'page arguments' => array('tipsy_admin'),
     'file' => 'tipsy.admin.inc',
   );
+
   return $items;
 }
 
@@ -57,11 +60,11 @@ function tipsy_menu() {
  * Implements hook_perm().
  */
 function tipsy_permission() {
-  $permissions = array(
-    'administer tipsy' => array(
-      'title' => t('Administer tipsy'),
-      'description' => t('Allows users to configure tipsy.'),
-    ),
+  $permissions = array();
+
+  $permissions['administer tipsy'] = array(
+    'title' => t('Administer tipsy'),
+    'description' => t('Allows users to configure tipsy.'),
   );
 
   return $permissions;
@@ -80,7 +83,7 @@ function tipsy_theme() {
 }
 
 /**
- * Helper function to retreive all settings for tipsy
+ * Helper function to retrieve all settings for tipsy.
  */
 function _tipsy_get_settings($new_rule = FALSE) {
   if ($new_rule == TRUE) {
@@ -97,7 +100,7 @@ function _tipsy_get_settings($new_rule = FALSE) {
         'html' => 0,
         'tooltip_content' => array(
           'source' => 'attribute',
-          'selector' => 'title'
+          'selector' => 'title',
         ),
       ),
     );
@@ -130,7 +133,7 @@ function _tipsy_get_settings($new_rule = FALSE) {
             'html' => 0,
             'tooltip_content' => array(
               'source' => 'attribute',
-              'selector' => 'title'
+              'selector' => 'title',
             ),
           ),
         ),
@@ -140,7 +143,7 @@ function _tipsy_get_settings($new_rule = FALSE) {
 
     // Convert settings for tipsy older than 7.x-1.0-beta2.
     $converted_settings = FALSE;
-    foreach ($settings['custom_selectors'] as $id => &$selector) {
+    foreach ($settings['custom_selectors'] as &$selector) {
       if (isset($selector['options']['title'])) {
         $selector['options']['tooltip_content']['source'] = 'attribute';
         $selector['options']['tooltip_content']['selector'] = $selector['options']['title'];

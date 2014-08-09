@@ -78,7 +78,6 @@ function rules_ui_form_edit_rules_config_submit($form, &$form_state) {
 function rules_ui_form_clone_rules_config($form, &$form_state, $rules_config, $base_path) {
   RulesPluginUI::$basePath = $base_path;
   $rules_config = clone $rules_config;
-  $rules_config->module = 'rules';
   $rules_config->id = NULL;
   $rules_config->name = '';
   $rules_config->label .= ' (' . t('cloned') . ')';
@@ -682,6 +681,16 @@ function rules_ui_element_decimal_validate($element, &$form_state) {
   }
   elseif ($value != $element['#value']) {
     form_set_value($element, $value, $form_state);
+  }
+}
+
+/**
+ * FAPI callback to validate an IP address.
+ */
+function rules_ui_element_ip_address_validate($element, &$form_state) {
+  $value = $element['#value'];
+  if ($value != '' && !filter_var($value, FILTER_VALIDATE_IP)) {
+    form_error($element, t('%name is not a valid IP address.', array('%name' => $element['#title'])));
   }
 }
 

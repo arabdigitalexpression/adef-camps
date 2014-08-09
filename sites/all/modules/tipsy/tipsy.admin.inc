@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Implementation of tipsy admin form
+ * Implementation of tipsy admin form.
  */
 function tipsy_admin($form, &$form_state) {
   $settings = _tipsy_get_settings();
@@ -29,7 +29,7 @@ function tipsy_admin($form, &$form_state) {
     '#prefix' => '<div class="clear-block" id="tipsy-drupal-forms-wrapper">',
     '#suffix' => '</div>',
   );
-  $form['drupal_forms']['wrapper']['options'] = tipsy_options_form($settings['drupal_forms'], true);
+  $form['drupal_forms']['wrapper']['options'] = tipsy_options_form($settings['drupal_forms'], TRUE);
 
   $form['custom_selectors'] = array(
     '#type' => 'fieldset',
@@ -47,7 +47,8 @@ function tipsy_admin($form, &$form_state) {
   $form['custom_selectors']['rules_submit'] = array(
     '#type' => 'button',
     '#value' => t('Add another rule'),
-    '#submit' => array('tipsy_custom_selectors_add'), // If no javascript action.
+    // If no javascript action.
+    '#submit' => array('tipsy_custom_selectors_add'),
     '#ajax' => array(
       'callback' => 'tipsy_admin_callback',
       'wrapper' => 'tipsy-custom-selectors',
@@ -79,18 +80,18 @@ function tipsy_admin($form, &$form_state) {
 }
 
 /**
- * AJAX callback to render the tipsy rules form
+ * AJAX callback to render the tipsy rules form.
  */
 function tipsy_admin_callback($form, $form_state) {
   return $form['custom_selectors']['rules'];
 }
 
 /**
- * Implementation of form function for the tooltip options
+ * Implementation of form function for the tooltip options.
  */
 function tipsy_options_form($settings = FALSE, $drupal_forms = FALSE) {
   if ($settings == FALSE) {
-    $settings = _tipsy_get_settings(true);
+    $settings = _tipsy_get_settings(TRUE);
   }
 
   $form = array();
@@ -168,7 +169,7 @@ function tipsy_options_form($settings = FALSE, $drupal_forms = FALSE) {
     '#maxlength' => 5,
     '#weight' => 7,
   );
-  if ($drupal_forms == false) {
+  if ($drupal_forms == TRUE) {
     $form['html'] = array(
       '#type' => 'checkbox',
       '#default_value' => $settings['options']['html'],
@@ -204,9 +205,9 @@ function tipsy_options_form($settings = FALSE, $drupal_forms = FALSE) {
 }
 
 /**
- * Implementation of a single tipsy rule form
+ * Implementation of a single tipsy rule form.
  */
-function tipsy_custom_selector_form($options = false) {
+function tipsy_custom_selector_form($options = FALSE) {
   $form = array();
   $form['#tree'] = TRUE;
   $form['selector'] = array(
@@ -220,7 +221,7 @@ function tipsy_custom_selector_form($options = false) {
 }
 
 /**
- * Theme the table form for tipsy rules
+ * Theme the table form for tipsy rules.
  */
 function theme_tipsy_custom_selectors_form($variables) {
   $form = $variables['form'];
@@ -241,7 +242,7 @@ function theme_tipsy_custom_selectors_form($variables) {
 }
 
 /**
- * Implementation of hook_validate for admin form
+ * Implementation of hook_validate for admin form.
  */
 function tipsy_admin_validate($form, &$form_values) {
   $drupal_forms = $form_values['values']['wrapper'];
@@ -282,7 +283,7 @@ function tipsy_admin_validate($form, &$form_values) {
 }
 
 /**
- * Implementation of form submit function for the admin form
+ * Implementation of form submit function for the admin form.
  */
 function tipsy_admin_submit($form, &$form_values) {
   $settings = array();

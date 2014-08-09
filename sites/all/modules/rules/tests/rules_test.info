@@ -6,9 +6,9 @@ files[] = rules_test.rules.inc
 files[] = rules_test.rules_defaults.inc
 hidden = TRUE
 
-; Information added by drupal.org packaging script on 2013-06-21
-version = "7.x-2.3+6-dev"
+; Information added by Drupal.org packaging script on 2014-05-14
+version = "7.x-2.7+5-dev"
 core = "7.x"
 project = "rules"
-datestamp = "1371781703"
+datestamp = "1400077740"
 

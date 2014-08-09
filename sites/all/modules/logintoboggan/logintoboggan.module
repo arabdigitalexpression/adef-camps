@@ -567,7 +567,7 @@ function logintoboggan_user_register_validate($form, &$form_state) {
   }
   //Check to see whether our e-mail address matches the confirm address if enabled.
   if (variable_get('logintoboggan_confirm_email_at_registration', 0) && isset($form_state['values']['conf_mail'])) {
-    if ($form_state['values']['mail'] != $form_state['values']['conf_mail']) {
+    if (trim($form_state['values']['mail']) != trim($form_state['values']['conf_mail'])) {
       form_set_error('conf_mail', t('Your e-mail address and confirmed e-mail address must match.'));
     }
   }
@@ -624,11 +624,11 @@ function logintoboggan_user_edit_validate($form, &$form_state) {
  *
  * @ingroup logintoboggan_core
  *
- * This is the best current place to dynamically remove the authenticated role
- * from the user object on initial page load.  hook_init() is too late, as menu
- * access checks have already been performed.
+ * This is currently the best place to dynamically remove the authenticated role
+ * from the user object, hook_boot() allows us to act on the user object before
+ * any access checks are performed.
  */
-function logintoboggan_menu_get_item_alter() {
+function logintoboggan_boot() {
   global $user;
 
   // Make sure any user with pre-auth role doesn't have authenticated user role
@@ -749,14 +749,18 @@ function logintoboggan_revalidate_access($account) {
  *   Which form to display, should be 'login' or 'register'.
  */
 function logintoboggan_unified_login_page($active_form = 'login') {
+  // Sanitise the $active_form text as it comes direct from the url.
+  // It should only ever be 'login' or 'register', so default to 'login'.
+  if ($active_form != 'login' && $active_form != 'register') {
+    $active_form = 'login';
+  }
+
   global $user;
   if ($user->uid) {
     menu_set_active_item('user/' . $user->uid);
     return menu_execute_active_handler(NULL, FALSE);
   }
   else {
-    // Title just clutters the interface...
-    drupal_set_title('');
     $output = logintoboggan_get_authentication_form($active_form);
     return $output;
   }

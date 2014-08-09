@@ -3,9 +3,9 @@ description = Exposes a color field type to store colors as hexadecimal values.
 package = Colorfield
 core = 7.x
 
-; Information added by drupal.org packaging script on 2013-06-26
-version = "7.x-1.0+2-dev"
+; Information added by Drupal.org packaging script on 2014-03-25
+version = "7.x-1.1"
 core = "7.x"
 project = "colorfield"
-datestamp = "1372207397"
+datestamp = "1395764960"
 

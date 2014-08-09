@@ -37,21 +37,21 @@ function feeds_tamper_explode_validate(&$settings) {
   $settings['real_separator'] = str_replace(array('%s', '%t', '%n'), array(' ', "\t", "\n"), $settings['separator']);
   $settings['limit'] = trim($settings['limit']);
 
-  if (!empty($settings['limit']) && !is_numeric($settings['limit'])) {
+  if (strlen($settings['limit']) && !is_numeric($settings['limit'])) {
     form_set_error('settings][limit', t('Limit must be an integer or blank.'));
+  }
+  elseif (strlen($settings['limit'])) {
+    $settings['limit'] = (int) $settings['limit'];
   }
 }
 
 function feeds_tamper_explode_callback($result, $item_key, $element_key, &$field, $settings, $source) {
-  $out = array();
   if (!is_array($field)) {
     $field = array($field);
   }
+  $out = array();
   foreach ($field as $f) {
-    if (strpos($f, $settings['real_separator']) === FALSE) {
-      $out[] = $f;
-    }
-    elseif ($settings['limit'] == '') {
+    if ($settings['limit'] === '') {
       $out = array_merge($out, explode($settings['real_separator'], $f));
     }
     else {

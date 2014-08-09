@@ -13,7 +13,7 @@
  *
  * @see theme_taxonomy_overview_vocabularies()
  */
-function taxonomy_access_fix_form_taxonomy_overview_vocabularies_alter(&$form, &$form_state, $form_id = 'taxonomy_overview_vocabularies') {
+function taxonomy_access_fix_form_taxonomy_overview_vocabularies_alter(&$form, &$form_state) {
   // Admin: don't fix anything.
   if (user_access('administer taxonomy')) {
     return TRUE;
@@ -45,6 +45,45 @@ function taxonomy_access_fix_form_taxonomy_overview_vocabularies_alter(&$form, &
 
   // Remove "Save" button.
   $form['actions']['#access'] = FALSE;
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter() for taxonomy_overview_terms().
+ */
+function taxonomy_access_fix_form_taxonomy_overview_terms_alter(&$form, &$form_state) {
+  // Admin: don't fix anything.
+  if (user_access('administer taxonomy')) {
+    return TRUE;
+  }
+
+  $vocabulary = $form['#vocabulary'];
+  $vid = $vocabulary->vid;
+
+  $can_edit = user_access('edit terms in ' . $vid);
+  $can_delete = user_access('delete terms in ' . $vid);
+
+  // Hide edit links
+  foreach (element_children($form) as $item) {
+    $item = &$form[$item];
+
+    // Term items are index like 'tid:14:0', so don't check that; check for #term.
+    if (isset($item['#term'])) {
+      if (!$can_edit) {
+        $item['edit']['#access'] = FALSE;
+      }
+
+      if ($can_delete) {
+        // Maybe someday...
+      }
+    }
+
+    unset($item);
+  }
+
+  // Hide Save and Reset buttons
+  if (!taxonomy_access_fix_access('reorder', $vocabulary)) {
+    $form['actions']['submit']['#access'] = $form['actions']['reset_alphabetical']['#access'] = FALSE;
+  }
 }
 
 /**
@@ -116,6 +155,7 @@ function taxonomy_access_fix_access($op, $vocabulary = NULL) {
         }
       }
       break;
+
     case 'list terms':
       if ($vocabulary) {
         $vid = $vocabulary->vid;
@@ -124,6 +164,11 @@ function taxonomy_access_fix_access($op, $vocabulary = NULL) {
         }
       }
       break;
+
+    case 'reorder':
+      // If you can list terms, you can reorder. Not logic, but backward compatibility.
+      return taxonomy_access_fix_access('list terms', $vocabulary);
+
     case 'add terms':
       if ($vocabulary) {
         $vid = $vocabulary->vid;

@@ -602,37 +602,13 @@ function devel_silent() {
 }
 
 /**
- * Enables xhprof.
- */
-function devel_xhprof_enable() {
-  if (devel_xhprof_is_enabled()) {
-    if ($path = variable_get('devel_xhprof_directory', '')) {
-      include_once $path . '/xhprof_lib/utils/xhprof_lib.php';
-      include_once $path . '/xhprof_lib/utils/xhprof_runs.php';
-      // @todo: consider a variable per-flag instead.
-      xhprof_enable(XHPROF_FLAGS_CPU + XHPROF_FLAGS_MEMORY);
-    }
-  }
-}
-
-/**
- * Checks if xhprof is enabled.
- */
-function devel_xhprof_is_enabled() {
-  return extension_loaded('xhprof') && variable_get('devel_xhprof_enabled', FALSE);
-}
-
-/**
  * Implements hook_boot().
  *
  * Runs even for cached pages.
  */
 function devel_boot() {
-  // Initialize XHProf.
-  devel_xhprof_enable();
-
   if (!devel_silent()) {
-    if (variable_get('dev_mem', 0)) {
+    if (variable_get('devel_memory', 0)) {
       global $memory_init;
       $memory_init = memory_get_usage();
     }
@@ -1085,12 +1061,6 @@ function devel_shutdown() {
   // Register the real shutdown function so it runs after other shutdown
   // functions.
   drupal_register_shutdown_function('devel_shutdown_real');
-
-  global $devel_run_id;
-  $devel_run_id = devel_xhprof_is_enabled() ? devel_shutdown_xhprof() : NULL;
-  if ($devel_run_id && function_exists('drush_log')) {
-    drush_log('xhprof link: ' . devel_xhprof_link($devel_run_id, 'url'), 'notice');
-  }
 }
 
 /**
@@ -1176,39 +1146,10 @@ function devel_shutdown_summary($queries) {
     $output .= devel_timer();
   }
 
-  if (devel_xhprof_is_enabled()) {
-    $output .= ' ' . devel_xhprof_link($GLOBALS['devel_run_id']);
-  }
-
   $output .= devel_shutdown_memory();
 
   if ($output) {
     return '<div class="dev-query">' . $output . '</div>';
-  }
-}
-
-/**
- * Returns the XHProf run ID.
- */
-function devel_shutdown_xhprof() {
-  // Namespace for your application.
-  $namespace = variable_get('site_name', '');
-  $xhprof_data = xhprof_disable();
-  $xhprof_runs = new XHProfRuns_Default();
-  return $xhprof_runs->save_run($xhprof_data, $namespace);
-}
-
-/**
- * Returns the XHProf link.
- */
-function devel_xhprof_link($run_id, $type = 'link') {
-  // @todo: render results from within Drupal.
-  $xhprof_url = variable_get('devel_xhprof_url', '');
-  // Namespace for your application.
-  $namespace = variable_get('site_name', '');
-  if ($xhprof_url) {
-    $url = $xhprof_url . '/index.php?run=' . urlencode($run_id) . '&source=' . urlencode($namespace);
-    return $type == 'url' ? $url : t('<a href="@xhprof">XHProf output</a>. ', array('@xhprof' => $url));
   }
 }
 
@@ -1218,7 +1159,7 @@ function devel_xhprof_link($run_id, $type = 'link') {
 function devel_shutdown_memory() {
   global $memory_init;
 
-  if (variable_get('dev_mem', FALSE)) {
+  if (variable_get('devel_memory', FALSE)) {
     $memory_shutdown = memory_get_usage();
     $args = array(
       '@memory_boot' => round($memory_init / 1024 / 1024, 2),
@@ -1774,7 +1715,7 @@ function dd($data, $label = NULL) {
 /**
  * Logs a variable to a drupal_debug.txt in the site's temp directory.
  *
- * @param string $data
+ * @param mixed $data
  *   The variable to log to the drupal_debug.txt log file.
  * @param string $label
  *   (optional) If set, a label to output before $data in the log file.
@@ -1789,9 +1730,9 @@ function drupal_debug($data, $label = NULL) {
   $out = ($label ? $label . ': ' : '') . print_r($data, TRUE) . "\n";
 
   // The temp directory does vary across multiple simpletest instances.
-  $file = 'temporary://drupal_debug.txt';
+  $file = file_directory_temp() . '/drupal_debug.txt';
   if (file_put_contents($file, $out, FILE_APPEND) === FALSE) {
-    drupal_set_message(t('The file could not be written.'), 'error');
+    drupal_set_message(t('Devel was unable to write to %file.', array('%file' => $file)), 'error');
     return FALSE;
   }
 }
@@ -1991,10 +1932,25 @@ function devel_render() {
 
 /**
  * Prints the function call stack.
+ *
+ * @param $return
+ *   Pass TRUE to return the formatted backtrace rather than displaying it in
+ *   the browser via kprint_r().
+ * @param $pop
+ *   How many items to pop from the top of the stack; useful when calling from
+ *   an error handler.
+ * @param $options
+ *   Options to pass on to PHP's debug_backtrace(), depending on your PHP
+ *   version.
+ *
+ * @return string|NULL
+ *   The formatted backtrace, if requested, or NULL.
+ *
+ * @see http://php.net/manual/en/function.debug-backtrace.php
  */
-function ddebug_backtrace($return = FALSE, $pop = 0) {
+function ddebug_backtrace($return = FALSE, $pop = 0, $options = TRUE) {
   if (user_access('access devel information')) {
-    $backtrace = debug_backtrace();
+    $backtrace = debug_backtrace($options);
     while ($pop-- > 0) {
       array_shift($backtrace);
     }

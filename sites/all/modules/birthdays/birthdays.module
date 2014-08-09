@@ -320,6 +320,9 @@ function birthdays_field_info() {
           'description' => '',
         ),
       ),
+      // Support hook_entity_property_info() from contrib "Entity API".
+      'property_type' => 'field_birthdays',
+      'property_callbacks' => array('birthdays_field_item_property_info_callback'),
     ),
   );
 }
@@ -347,6 +350,9 @@ function birthdays_field_formatter_info() {
     'birthdays_starsign' => array(
       'label' => t('Starsign'),
       'field types' => array('birthdays_date'),
+      'settings' => array(
+        'starsign_with_yahoo_link' => FALSE,
+      ),
     ),
     'birthdays_age' => array(
       'label' => t('Age'),
@@ -363,6 +369,7 @@ function birthdays_field_formatter_info() {
  * Implements hook_field_formatter_settings_form().
  */
 function birthdays_field_formatter_settings_form($field, $instance, $view_mode, $form, &$form_state) {
+  $element = array();
   $settings = $instance['display'][$view_mode]['settings'];
 
   switch ($instance['display'][$view_mode]['type']) {
@@ -417,9 +424,17 @@ function birthdays_field_formatter_settings_form($field, $instance, $view_mode, 
           '#field_suffix' => ' <small id="edit-birthdays-dateformat-noyear-suffix"></small>',
         );
       }
+      break;
 
-      return $element;
+    case 'birthdays_starsign':
+      $element['starsign_with_yahoo_link'] = array(
+        '#type' => 'checkbox',
+        '#title' => t('Starsign with link to Yahoo Astrology'),
+        '#default_value' => $settings['starsign_with_yahoo_link'],
+      );
+      break;
   }
+  return $element;
 }
 
 /**
@@ -445,8 +460,17 @@ function birthdays_field_formatter_settings_summary($field, $instance, $view_mod
         case BIRTHDAYS_HIDE_YEAR_YES:
           return t('Date format: <strong>@noyear</strong>', $vars);
       }
-
       break;
+
+    case 'birthdays_starsign':
+      $summary = array();
+      if ($display['settings']['starsign_with_yahoo_link']) {
+        $summary[] = t('Starsign with link to Yahoo Astrology.');
+      }
+      else {
+        $summary[] = t('Starsign without link to Yahoo Astrology.');
+      }
+      return implode('<br />', $summary);
   }
 }
 
@@ -455,6 +479,7 @@ function birthdays_field_formatter_settings_summary($field, $instance, $view_mod
  */
 function birthdays_field_formatter_view($entity_type, $entity, $field, $instance, $langcode, $items, $display) {
   $element = array();
+  $bp = base_path();
 
   foreach ($items as $delta => $item) {
     $birthday = BirthdaysBirthday::fromArray($item);
@@ -463,6 +488,7 @@ function birthdays_field_formatter_view($entity_type, $entity, $field, $instance
       continue;
     }
 
+    $starsign = $birthday->getStarsign();
     switch ($display['type']) {
       case 'birthdays_plaintext':
         $element[$delta] = array('#markup' => check_plain($birthday->toString($display['settings']['dateformat'], $display['settings']['dateformat_noyear'])));
@@ -472,12 +498,25 @@ function birthdays_field_formatter_view($entity_type, $entity, $field, $instance
         if (!$birthday->isEmpty()) {
           $element[$delta] = array(
             '#theme' => 'image',
-            '#path' => url(drupal_get_path('module', 'birthdays') . '/starsigns/' . $birthday->getStarsign() . '.gif'),
+            '#path' => $bp . drupal_get_path('module', 'birthdays') . '/starsigns/' . $starsign . '.gif',
             '#height' => '35',
             '#width' => '35',
-            '#alt' => t(ucfirst($birthday->getStarsign())),
-            '#title' => t(ucfirst($birthday->getStarsign())),
+            '#alt' => t(ucfirst($starsign)),
+            '#title' => t(ucfirst($starsign)),
           );
+          if ($display['settings']['starsign_with_yahoo_link']) {
+            $image = $element[$delta];
+            $link = array(
+              '#theme' => 'link',
+              '#text' => drupal_render($image),
+              '#path' => 'http://shine.yahoo.com/horoscope/' . $starsign,
+              '#options' => array(
+                'attributes' => array(),
+                'html' => TRUE,
+              ),
+            );
+            $element[$delta] = $link;
+          }
         }
         break;
 
@@ -896,21 +935,23 @@ function _birthdays_instance_hook($i) {
  * Implements hook_birthdays().
  */
 function birthdays_birthdays($entity, $instance) {
-  // Require the trigger module.
-  if (!module_exists('trigger')) {
-    return;
+  // Trigger module support.
+  if (module_exists('trigger')) {
+    // Context information.
+    $context = array(
+      'group' => 'birthdays',
+      'hook' => _birthdays_instance_hook($instance),
+      $instance['entity_type'] => $entity,
+    );
+    // Execute the matching set of actions.
+    $aids = trigger_get_assigned_actions($context['hook']);
+    actions_do(array_keys($aids), $entity, $context, $instance);
   }
 
-  // Context information.
-  $context = array(
-    'group' => 'birthdays',
-    'hook' => _birthdays_instance_hook($instance),
-    $instance['entity_type'] => $entity,
-  );
-
-  // Execute the matching set of actions.
-  $aids = trigger_get_assigned_actions($context['hook']);
-  actions_do(array_keys($aids), $entity, $context, $instance);
+  // Rules module support.
+  if (module_exists('rules')) {
+    rules_invoke_event_by_args('birthdays_current', array('birthdays_current' => $entity));
+  }
 }
 
 /**
@@ -1010,8 +1051,6 @@ function _birthdays_get($trigger, $instance, $day, $month, $year = NULL) {
  * Implements hook_cron().
  */
 function birthdays_cron() {
-  $instances = _birthdays_field_instances();
-
   // The cronjob run at most once a day.
   $day = 24 * 60 * 60;
   $last_cron = variable_get('birthdays_last_cron', REQUEST_TIME - $day);
@@ -1019,6 +1058,7 @@ function birthdays_cron() {
     return;
   }
 
+  $instances = _birthdays_field_instances();
   // Prepare an admin mail.
   $admin_mail = array();
   foreach ($instances as $instance) {
@@ -1124,4 +1164,35 @@ function birthdays_mail($key, &$message, $params) {
       }
       break;
   }
+}
+
+
+/**
+ * Defines info for the properties of the link-field item data structure.
+ */
+function birthdays_field_item_property_info_callback(&$info, $entity_type, $field, $instance, $field_type) {
+  $property = &$info[$entity_type]['bundles'][$instance['bundle']]['properties'][$field['field_name']];
+  $property['getter callback'] = 'entity_metadata_field_verbatim_get';
+  $property['setter callback'] = 'entity_metadata_field_verbatim_set';
+  unset($property['query callback']);
+  $property['property info']['year'] = array(
+    'type' => 'integer',
+    'label' => t('Year'),
+    'setter callback' => 'entity_property_verbatim_set',
+  );
+  $property['property info']['month'] = array(
+    'type' => 'integer',
+    'label' => t('Month'),
+    'setter callback' => 'entity_property_verbatim_set',
+  );
+  $property['property info']['day'] = array(
+    'type' => 'integer',
+    'label' => t('Day'),
+    'setter callback' => 'entity_property_verbatim_set',
+  );
+  $property['property info']['triggers'] = array(
+    'type' => 'integer',
+    'label' => t('Triggers'),
+    'setter callback' => 'entity_property_verbatim_set',
+  );
 }
