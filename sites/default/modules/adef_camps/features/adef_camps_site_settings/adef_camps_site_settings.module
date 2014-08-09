@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the Adef Camps Site Settings feature.
+ */
+
+include_once 'adef_camps_site_settings.features.inc';
