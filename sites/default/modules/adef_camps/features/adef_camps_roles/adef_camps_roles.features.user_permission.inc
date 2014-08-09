@@ -28,24 +28,6 @@ function adef_camps_roles_user_default_permissions() {
     'module' => 'views',
   );
 
-  // Exported permission: 'access backup and migrate'.
-  $permissions['access backup and migrate'] = array(
-    'name' => 'access backup and migrate',
-    'roles' => array(
-      'administrator' => 'administrator',
-    ),
-    'module' => 'backup_migrate',
-  );
-
-  // Exported permission: 'access backup files'.
-  $permissions['access backup files'] = array(
-    'name' => 'access backup files',
-    'roles' => array(
-      'administrator' => 'administrator',
-    ),
-    'module' => 'backup_migrate',
-  );
-
   // Exported permission: 'access content'.
   $permissions['access content'] = array(
     'name' => 'access content',
@@ -64,15 +46,6 @@ function adef_camps_roles_user_default_permissions() {
       'administrator' => 'administrator',
     ),
     'module' => 'node',
-  );
-
-  // Exported permission: 'access devel information'.
-  $permissions['access devel information'] = array(
-    'name' => 'access devel information',
-    'roles' => array(
-      'administrator' => 'administrator',
-    ),
-    'module' => 'devel',
   );
 
   // Exported permission: 'access private fields'.
@@ -215,15 +188,6 @@ function adef_camps_roles_user_default_permissions() {
       'administrator' => 'administrator',
     ),
     'module' => 'panels',
-  );
-
-  // Exported permission: 'administer backup and migrate'.
-  $permissions['administer backup and migrate'] = array(
-    'name' => 'administer backup and migrate',
-    'roles' => array(
-      'administrator' => 'administrator',
-    ),
-    'module' => 'backup_migrate',
   );
 
   // Exported permission: 'administer blocks'.
@@ -786,15 +750,6 @@ function adef_camps_roles_user_default_permissions() {
     'module' => 'node',
   );
 
-  // Exported permission: 'delete backup files'.
-  $permissions['delete backup files'] = array(
-    'name' => 'delete backup files',
-    'roles' => array(
-      'administrator' => 'administrator',
-    ),
-    'module' => 'backup_migrate',
-  );
-
   // Exported permission: 'delete own badge content'.
   $permissions['delete own badge content'] = array(
     'name' => 'delete own badge content',
@@ -1188,15 +1143,6 @@ function adef_camps_roles_user_default_permissions() {
     'module' => 'taxonomy',
   );
 
-  // Exported permission: 'execute php code'.
-  $permissions['execute php code'] = array(
-    'name' => 'execute php code',
-    'roles' => array(
-      'administrator' => 'administrator',
-    ),
-    'module' => 'devel',
-  );
-
   // Exported permission: 'generate features'.
   $permissions['generate features'] = array(
     'name' => 'generate features',
@@ -1261,15 +1207,6 @@ function adef_camps_roles_user_default_permissions() {
     'module' => 'features',
   );
 
-  // Exported permission: 'perform backup'.
-  $permissions['perform backup'] = array(
-    'name' => 'perform backup',
-    'roles' => array(
-      'administrator' => 'administrator',
-    ),
-    'module' => 'backup_migrate',
-  );
-
   // Exported permission: 'register participants'.
   $permissions['register participants'] = array(
     'name' => 'register participants',
@@ -1287,15 +1224,6 @@ function adef_camps_roles_user_default_permissions() {
       'administrator' => 'administrator',
     ),
     'module' => 'features',
-  );
-
-  // Exported permission: 'restore from backup'.
-  $permissions['restore from backup'] = array(
-    'name' => 'restore from backup',
-    'roles' => array(
-      'administrator' => 'administrator',
-    ),
-    'module' => 'backup_migrate',
   );
 
   // Exported permission: 'revert revisions'.
@@ -1323,15 +1251,6 @@ function adef_camps_roles_user_default_permissions() {
       'authenticated user' => 'authenticated user',
     ),
     'module' => 'adef_camps',
-  );
-
-  // Exported permission: 'switch users'.
-  $permissions['switch users'] = array(
-    'name' => 'switch users',
-    'roles' => array(
-      'administrator' => 'administrator',
-    ),
-    'module' => 'devel',
   );
 
   // Exported permission: 'tamper bagdes'.
