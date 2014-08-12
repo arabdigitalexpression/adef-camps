@@ -56,7 +56,7 @@ function adef_camps_registry($node, $type) {
  */
 function adef_camps_schedule($node) {
   $period_date = adef_camps_get_period_date();
-  $views_date_arg = $period_date['year'] . '-' . $period_date['month'] . '-' . $period_date['day'] . '--P8D'; //--P8D for 2014 only to show all days of camp
+  $views_date_arg = $period_date['year'] . '-' . $period_date['month'] . '-' . $period_date['day'] . '--P2D';
   $page['schedule'] = array(
       '#type' => 'markup',
       '#markup' => '<div id="participant-schedule">' . views_embed_view('content_blocks', 'block_participant_schedule', $node->nid) . '</div>',
