@@ -36,6 +36,11 @@ h4 {
   border: 1px #1c9cd4 solid;
 }
 
+#available-sessions {
+  overflow-x: scroll;
+  overflow-y: hidden;
+}
+
 #available-sessions .session,
 #available-sessions h3,
 .schedule .session,
@@ -46,14 +51,14 @@ h4 {
 }
 
 #available-sessions .session {
-  width: 11.5%;
+  width: 140px; /* instea of 11.5% for 2 day only display */
 }
 
 #available-sessions h3,
 .schedule .view-content h3 {
   clear: both;
   margin: 0;
-  width: 8%;
+  width: 140px; /* instead of 8% for 2 day only display */
 }
 
 .schedule .session {

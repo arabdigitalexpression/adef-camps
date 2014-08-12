@@ -294,8 +294,8 @@ function adef_camps_get_period_date() {
     $period_day += 2;
   }
   $start_date['day'] = $period_day;
-  //manual override for 2013
-  if ($start_date['day'] >= 25) {
+  //manual override for 2014
+  if ($start_date['day'] >= 19) {
     $start_date['day'] += 1;
   }
   return $start_date;

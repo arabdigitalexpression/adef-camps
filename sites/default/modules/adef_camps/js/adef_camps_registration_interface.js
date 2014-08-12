@@ -51,6 +51,14 @@
     for (var i = 0; i < selected_array.length; i++) {
       $('.session.timespaceid-' + selected_array[i]).click();
     }
+    //resize container to fit width of schedule for scrolling
+    firstLocation = $('#available-sessions h3').first();
+    slotsInLocation = firstLocation.nextUntil('h3','.session');
+    totalWidth = firstLocation.outerWidth();
+    for (i=0;i < slotsInLocation.length;i++) {
+      totalWidth += $(slotsInLocation[i]).outerWidth();
+    }
+    $('#available-sessions div.view').width(totalWidth);
   });
 
   function getClassByPrefix(item, prefix) {

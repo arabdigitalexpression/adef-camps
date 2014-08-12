@@ -4,7 +4,7 @@ function adef_camps_register($node) {
   drupal_add_js(drupal_get_path('module', 'adef_camps') . '/js/adef_camps_registration_interface.js');
 
   $period_date = adef_camps_get_period_date();
-  $views_date_arg = $period_date['year'] . '-' . $period_date['month'] . '-' . $period_date['day'] . '--P2D';
+  $views_date_arg = $period_date['year'] . '-' . $period_date['month'] . '-' . $period_date['day'] . '--P8D'; //--P8D for 2014 only to show all days of camp
   $sessions = views_get_view_result('content_blocks', 'block_sessions', $views_date_arg);
   $user_sessions = views_get_view_result('content_blocks', 'block_sessions', $views_date_arg, $node->nid);
   //user_sessrions[i]->nid
@@ -51,9 +51,12 @@ function adef_camps_registry($node, $type) {
   return $page;
 }
 
+/*
+ * Return page array with schedule for the participant.
+ */
 function adef_camps_schedule($node) {
   $period_date = adef_camps_get_period_date();
-  $views_date_arg = $period_date['year'] . '-' . $period_date['month'] . '-' . $period_date['day'] . '--P2D';
+  $views_date_arg = $period_date['year'] . '-' . $period_date['month'] . '-' . $period_date['day'] . '--P8D'; //--P8D for 2014 only to show all days of camp
   $page['schedule'] = array(
       '#type' => 'markup',
       '#markup' => '<div id="participant-schedule">' . views_embed_view('content_blocks', 'block_participant_schedule', $node->nid) . '</div>',
