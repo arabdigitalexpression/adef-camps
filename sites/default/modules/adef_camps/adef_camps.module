@@ -300,3 +300,43 @@ function adef_camps_get_period_date() {
   }
   return $start_date;
 }
+
+/**
+ * Implements hook_date_formats();
+ */
+function adef_camps_date_formats() {
+  return array(
+      array(
+          'type' => 'time_only',
+          'format' => 'H:i',
+          'locales' => array(),
+      ),
+      array(
+          'type' => 'time_only_12h',
+          'format' => 'h:i',
+          'locales' => array(),
+      ),
+      array(
+          'type' => 'short_date_only',
+          'format' => 'j/n/Y',
+          'locales' => array(),
+      ),
+      array(
+          'type' => 'date_only',
+          'format' => 'l j F',
+          'locales' => array(),
+      ),
+  );
+}
+
+/**
+ * Implements hook_date_format_types();
+ */
+function adef_camps_date_format_types() {
+  return array(
+      'time_only' => t('Time Only'),
+      'time_only_12h' => t('Time Only 12h'),
+      'short_date_only' => t('Short Date Only'),
+      'date_only' => t('Date Only')
+  );
+}
