@@ -106,8 +106,8 @@ function content_types_image_default_styles() {
         'module' => 'image',
         'name' => 'image_crop',
         'data' => array(
-          'width' => 2500,
-          'height' => 1300,
+          'width' => 1200,
+          'height' => 625,
           'anchor' => 'center-top',
         ),
         'weight' => -10,
@@ -122,8 +122,8 @@ function content_types_image_default_styles() {
         'module' => 'image',
         'name' => 'image_scale_and_crop',
         'data' => array(
-          'width' => 1400,
-          'height' => 450,
+          'width' => 1200,
+          'height' => 385,
         ),
         'weight' => -9,
       ),
