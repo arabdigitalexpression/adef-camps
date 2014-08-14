@@ -5,7 +5,7 @@
 function adef_camps_registration_slots() {
   $result = array();
   $period_date = adef_camps_get_period_date();
-  $views_date_arg = $period_date['year'] . '-' . $period_date['month'] . '-' . $period_date['day'] . '--P4D'; //--P8D for 2014 camp to show all days at once during registration
+  $views_date_arg = $period_date['year'] . '-' . $period_date['month'] . '-' . $period_date['day'] . '--P2D'; //--P8D for 2014 camp to show all days at once during registration
   $sessions = views_get_view_result('content_blocks', 'block_sessions', $views_date_arg);
   foreach ($sessions as $timespace) {
     $node = node_load($timespace->nid);
