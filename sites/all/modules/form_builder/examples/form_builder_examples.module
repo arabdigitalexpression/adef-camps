@@ -140,6 +140,8 @@ function form_builder_examples_form_builder_field_access($op, $form_type, $form_
  * Implementation of hook_form_builder_types().
  *
  * Define the supported fields and properties supported by CCK.
+ *
+ * @todo port this to the new API.
  */
 function form_builder_examples_form_builder_types() {
   $fields = array();
@@ -394,7 +396,9 @@ function form_builder_examples_export_form() {
 
   $form = array();
 
-  $current = form_builder_cache_load('example', 'sample');
+  $current = FormBuilderLoader::instance()
+    ->fromCache('example', 'sample')
+    ->getFormArray();
 
   $form['export'] = array(
     '#type' => 'textarea',

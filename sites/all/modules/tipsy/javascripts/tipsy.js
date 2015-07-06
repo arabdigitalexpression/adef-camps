@@ -1,6 +1,7 @@
 (function($) {
   Drupal.behaviors.tipsy = {
     attach: function(context, settings) {
+      // Forms tooltips.
       if (Drupal.settings.tipsy.drupal_forms) {
         var formElement = $('.form-item');
         formElement.each(function(){
@@ -22,34 +23,23 @@
           }
         });
       }
-      if (Drupal.settings.tipsy.custom_selectors) {
-        var selectors = Drupal.settings.tipsy.custom_selectors;
-        $(selectors).each(function(){
-          var selector = $(this)[0].selector;
-          var options = $(this)[0].options;
-          var tooltipElement = $(selector);
+      // Custom selectors tooltips.
+      $.each(Drupal.settings.tipsy.custom_selectors, function(){
+        var selector = $(this)[0].selector;
+        var options = $(this)[0].options;
+        var tooltipElement = $(selector);
 
-          if (options.tooltip_content.source == 'attribute') {
-            var title = options.tooltip_content.selector;
-          }
-          else {
-            var title = function() {
-              return $(options.tooltip_content.selector, tooltipElement).html();
-            }
-          }
-          tooltipElement.tipsy({
-            title: title,
-            html: parseInt(options.html),
-            delayIn: parseInt(options.delayIn),
-              delayOut: parseInt(options.delayOut),
-              fade: parseInt(options.fade),
-              gravity: tipsy_determine_gravity(options.gravity),
-              offset: parseInt(options.offset),
-              opacity: parseFloat(options.opacity),
-              trigger: options.trigger
-          });
+        tooltipElement.tipsy({
+          html: parseInt(options.html),
+          delayIn: parseInt(options.delayIn),
+          delayOut: parseInt(options.delayOut),
+          fade: parseInt(options.fade),
+          gravity: tipsy_determine_gravity(options.gravity),
+          offset: parseInt(options.offset),
+          opacity: parseFloat(options.opacity),
+          trigger: options.trigger
         });
-      }
+      });
     }
   };
 

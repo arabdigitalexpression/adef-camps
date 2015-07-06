@@ -58,5 +58,8 @@ This is the default (Source: 'HTML attribute', Selector: 'title')
   <div class="contents">Tooltip HTML that can't really fit into an attribute</div>
   Ordinary text that the user sees
 </div>
-The tooltip is pulled with the settings Source: 'Child element',
-Selector: '.contents'
+The tooltip is pulled with the settings Source: 'Child element', Selector: '.contents'.
+
+3) A sibling of the element with the given selector. For example:
+<input type='text'>
+<div class='description'>Here is a tooltip</div>

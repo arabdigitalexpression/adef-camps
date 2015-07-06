@@ -653,6 +653,10 @@ function token_get_invalid_tokens($type, $tokens) {
   $invalid_tokens = array();
 
   foreach ($tokens as $token => $full_token) {
+    if (isset($token_info['tokens'][$type][$token])) {
+      continue;
+    }
+
     // Split token up if it has chains.
     $parts = explode(':', $token, 2);
 
@@ -979,7 +983,7 @@ function _token_build_tree($token_type, array $options) {
       // parent.
       $token_parents[] = $token_type;
     }
-    elseif (in_array($token, array_slice($token_parents, 1))) {
+    elseif (in_array($token, array_slice($token_parents, 1), TRUE)) {
       // Prevent duplicate recursive tokens. For example, this will prevent
       // the tree from generating the following tokens or deeper:
       // [comment:parent:parent]

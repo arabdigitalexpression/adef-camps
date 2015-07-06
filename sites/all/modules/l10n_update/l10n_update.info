@@ -6,9 +6,9 @@ package = Multilingual
 
 files[] = l10n_update.parser.inc
 
-; Information added by Drupal.org packaging script on 2014-08-06
-version = "7.x-1.0+4-dev"
+; Information added by Drupal.org packaging script on 2015-01-09
+version = "7.x-1.1+1-dev"
 core = "7.x"
 project = "l10n_update"
-datestamp = "1407321529"
+datestamp = "1420798382"
 

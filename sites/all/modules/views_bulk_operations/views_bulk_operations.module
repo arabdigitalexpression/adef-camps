@@ -76,7 +76,7 @@ function views_bulk_operations_load_action_includes() {
 function views_bulk_operations_cron() {
   db_delete('queue')
     ->condition('name', db_like('views_bulk_operations_active_queue_'), 'LIKE')
-    ->condition('created', REQUEST_TIME - 864000, '<')
+    ->condition('created', REQUEST_TIME - 86400, '<')
     ->execute();
 }
 
@@ -633,7 +633,7 @@ function theme_views_bulk_operations_confirmation($variables) {
   // Load the entities from the current page, and show their titles.
   $entities = _views_bulk_operations_entity_load($entity_type, array_values($rows), $vbo->revision);
   foreach ($entities as $entity) {
-    $items[] = check_plain(_views_bulk_operations_entity_label($entity_type, $entity));
+    $items[] = check_plain(entity_label($entity_type, $entity));
   }
   // All rows on all pages have been selected, so show a count of additional items.
   if ($select_all_pages) {
@@ -647,13 +647,24 @@ function theme_views_bulk_operations_confirmation($variables) {
 }
 
 /**
+ * Implements hook_preprocess_page().
+ *
+ * Hide action links on the configure and confirm pages.
+ */
+function views_bulk_operations_preprocess_page(&$variables) {
+  if (isset($_POST['select_all'], $_POST['operation'])) {
+    $variables['action_links'] = array();
+  }
+}
+
+/**
  * Implements hook_preprocess_views_view().
  */
 function views_bulk_operations_preprocess_views_view($variables) {
   // If we've stored a title for the confirmation form, retrieve it here and
   // retitle the View.
   // @see views_bulk_operations_confirm_form()
-  if (isset($variables['rows']['#vbo_confirm_form_title'])) {
+  if (array_key_exists('rows', $variables) && is_array($variables['rows']) && array_key_exists('#vbo_confirm_form_title', $variables['rows'])) {
     $variables['view']->set_title($variables['rows']['#vbo_confirm_form_title']);
   }
 }
@@ -1069,7 +1080,7 @@ function views_bulk_operations_queue_item_process($queue_item_data, &$log = NULL
       $arguments = array(
         '%operation' => $operation->label(),
         '@type' => $entity_type,
-        '%title' => _views_bulk_operations_entity_label($entity_type, $entity),
+        '%title' => entity_label($entity_type, $entity),
       );
 
       if ($log) {
@@ -1155,7 +1166,7 @@ function views_bulk_operations_direct_process($operation, $rows, $options) {
         $context['results']['log'][] = t('Skipped %operation on @type %title due to insufficient permissions.', array(
           '%operation' => $operation->label(),
           '@type' => $entity_type,
-          '%title' => _views_bulk_operations_entity_label($entity_type, $entity),
+          '%title' => entity_label($entity_type, $entity),
         ));
         unset($entities[$id]);
       }
@@ -1261,29 +1272,6 @@ function _views_bulk_operations_entity_load($entity_type, $ids, $revision = FALS
   }
 
   return $entities;
-}
-
-/**
- * Label function for entities.
- * Core entities don't declare the "label" key, so entity_label() fails,
- * and a fallback is needed. This function provides that fallback.
- */
-function _views_bulk_operations_entity_label($entity_type, $entity) {
-  $label = entity_label($entity_type, $entity);
-  if (!$label) {
-    $entity_info = entity_get_info($entity_type);
-    $id_key = $entity_info['entity keys']['id'];
-    // Many entity types (e.g. "user") have a name which fits the label perfectly.
-    if (isset($entity->name)) {
-      $label = $entity->name;
-    }
-    elseif (isset($entity->{$id_key})) {
-      // Fallback to the id key.
-      $label = $entity->{$id_key};
-    }
-  }
-
-  return $label;
 }
 
 /**

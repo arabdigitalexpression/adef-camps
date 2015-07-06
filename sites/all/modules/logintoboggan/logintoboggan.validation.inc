@@ -22,7 +22,7 @@ function logintoboggan_validate_email($account, $timestamp, $hashed_pass, $actio
   // - the user is still in the pre-auth role or didn't set
   //   their own password.
   // - the hashed password is correct.
-  if (((variable_get('user_email_verification', TRUE) && empty($account->login)) || ($pre_auth && array_key_exists($validating_id, $account->roles))) && $hashed_pass == logintoboggan_eml_rehash($account->pass, $timestamp, $account->mail)) {
+  if (((variable_get('user_email_verification', TRUE) && empty($account->login)) || ($pre_auth && array_key_exists($validating_id, $account->roles))) && $hashed_pass == logintoboggan_eml_rehash($account->pass, $timestamp, $account->mail, $account->uid)) {
     watchdog('user', 'E-mail validation URL used for %name with timestamp @timestamp.', array('%name' => $account->name, '@timestamp' => $timestamp));
 
     _logintoboggan_process_validation($account);
@@ -39,7 +39,7 @@ function logintoboggan_validate_email($account, $timestamp, $hashed_pass, $actio
           drupal_set_message(t('You have successfully validated your e-mail address.'));
         }
         if (!$account->status) {
-          drupal_set_message(t('Your account is currently blocked -- login cancelled.'), 'error');
+          drupal_set_message(t('Your account is currently blocked -- login canceled.'), 'error');
           drupal_goto('');
         }
         else {

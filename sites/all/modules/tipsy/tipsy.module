@@ -11,17 +11,19 @@ function tipsy_page_build(&$page) {
  * Implements hook_library().
  */
 function tipsy_library() {
+  $module_path = drupal_get_path('module', 'tipsy');
   $libraries = array();
+  
   $libraries['tipsy'] = array(
     'title' => 'Tipsy',
     'website' => 'http://onehackoranother.com/projects/jquery/tipsy/',
     'version' => '0.1.7',
     'js' => array(
-      drupal_get_path('module', 'tipsy') . '/javascripts/jquery.tipsy.js' => array(),
-      drupal_get_path('module', 'tipsy') . '/javascripts/tipsy.js' => array(),
+      $module_path . '/javascripts/jquery.tipsy.js' => array(),
+      $module_path . '/javascripts/tipsy.js' => array(),
     ),
     'css' => array(
-      drupal_get_path('module', 'tipsy') . '/stylesheets/tipsy.css' => array(
+      $module_path . '/stylesheets/tipsy.css' => array(
         'type' => 'file',
         'media' => 'screen',
       ),

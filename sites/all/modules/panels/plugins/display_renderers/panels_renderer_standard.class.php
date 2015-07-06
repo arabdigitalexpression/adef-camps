@@ -407,14 +407,23 @@ class panels_renderer_standard {
    * their CSS added in the right order: inner content before outer content.
    */
   function add_meta() {
+    global $theme;
+
     if (!empty($this->plugins['layout']['css'])) {
+      // Do not use the path_to_theme() function, because it returns the
+      // $GLOBALS['theme_path'] value, which may be overriden in the theme()
+      // function when the theme hook defines the key 'theme path'.
+      $theme_path = isset($theme) ? drupal_get_path('theme', $theme) : '';
+
       $css = $this->plugins['layout']['css'];
       if (!is_array($css)) {
         $css = array($css);
       }
-      foreach($css as $file) {
-        if (file_exists(path_to_theme() . '/' . $file)) {
-          $this->add_css(path_to_theme() . '/' . $file);
+
+      // Load each of the CSS files defined in this layout.
+      foreach ($css as $file) {
+        if (!empty($theme_path) && file_exists($theme_path . '/' . $file)) {
+          $this->add_css($theme_path . '/' . $file);
         }
         else {
           $this->add_css($this->plugins['layout']['path'] . '/' . $file);
@@ -427,7 +436,7 @@ class panels_renderer_standard {
       if (!is_array($admin_css)) {
         $admin_css = array($admin_css);
       }
-      foreach($admin_css as $file) {
+      foreach ($admin_css as $file) {
         $this->add_css($this->plugins['layout']['path'] . '/' . $file);
       }
     }
@@ -465,6 +474,7 @@ class panels_renderer_standard {
    *   The array of rendered panes, keyed on pane pid.
    */
   function render_panes() {
+    drupal_alter('panels_prerender_panes', $this);
     ctools_include('content');
 
     // First, render all the panes into little boxes.
@@ -572,12 +582,14 @@ class panels_renderer_standard {
     if (!empty($content)) {
       // Pass long the css_id that is usually available.
       if (!empty($pane->css['css_id'])) {
-        $content->css_id = check_plain($pane->css['css_id']);
+        $id = ctools_context_keyword_substitute($pane->css['css_id'], array(), $this->display->context);
+        $content->css_id = drupal_html_id($id);
       }
 
       // Pass long the css_class that is usually available.
       if (!empty($pane->css['css_class'])) {
-        $content->css_class = check_plain($pane->css['css_class']);
+        $class = ctools_context_keyword_substitute($pane->css['css_class'], array(), $this->display->context, array('css safe' => TRUE));
+        $content->css_class = check_plain(drupal_strtolower($class));
       }
     }
 
@@ -592,6 +604,7 @@ class panels_renderer_standard {
    *   An array of rendered panel regions, keyed on the region name.
    */
   function render_regions() {
+    drupal_alter('panels_prerender_regions', $this);
     $this->rendered['regions'] = array();
 
     // Loop through all panel regions, put all panes that belong to the current

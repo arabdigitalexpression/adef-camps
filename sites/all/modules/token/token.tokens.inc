@@ -1392,7 +1392,6 @@ function field_token_info_alter(&$info) {
  */
 function field_tokens($type, $tokens, array $data = array(), array $options = array()) {
   $replacements = array();
-  $sanitize = !empty($options['sanitize']);
   $langcode = isset($options['language']) ? $options['language']->language : NULL;
 
   // Entity tokens.

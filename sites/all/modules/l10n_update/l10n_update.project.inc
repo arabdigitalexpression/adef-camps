@@ -228,7 +228,7 @@ function _l10n_update_project_info_list(&$projects, $list, $project_type, $disab
         'name' => $project_name,
         'info' => $file->info,
         'datestamp' => isset($file->info['datestamp']) ? $file->info['datestamp'] : 0,
-        'includes' => array($file->name => $file->info['name']),
+        'includes' => array($file->name => isset($file->info['name']) ? $file->info['name'] : $file->name),
         'project_type' => $project_name == 'drupal' ? 'core' : $project_type,
       );
     }

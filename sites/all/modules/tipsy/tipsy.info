@@ -4,9 +4,9 @@ core = 7.x
 
 configure = admin/config/user-interface/tipsy
 
-; Information added by Drupal.org packaging script on 2014-07-13
-version = "7.x-1.0-rc1+6-dev"
+; Information added by Drupal.org packaging script on 2015-01-25
+version = "7.x-1.0-rc1+10-dev"
 core = "7.x"
 project = "tipsy"
-datestamp = "1405242828"
+datestamp = "1422218535"
 

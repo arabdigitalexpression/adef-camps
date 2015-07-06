@@ -3,46 +3,46 @@
 
 Drupal.behaviors.unifiedLogin = {
 
-  attach: function (context) {
+  attach: function (context, settings) {
     // Attach behaviors to the links so that they show/hide forms appropriately.
-    $('.toboggan-unified #register-link').click(function() {
+    $('.toboggan-unified #register-link', context).click(function() {
       $(this).addClass('lt-active').blur();
-      $('.toboggan-unified #login-link').removeClass('lt-active');
-      $('.toboggan-unified #register-form').show();
-      $('.toboggan-unified #login-form').hide();
+      $('.toboggan-unified #login-link', context).removeClass('lt-active');
+      $('.toboggan-unified #register-form', context).show();
+      $('.toboggan-unified #login-form', context).hide();
       $.ajax({
         url: "/user/register",
         success: function(data) {
           var title = data.match("<title>(.*?)</title>")[1];
           $('html head').find('title').text(title);
           $('h1.title').text(title.substring(0,title.indexOf('|')));
-        },
+        }
       });
       return false;
     });
-    $('.toboggan-unified #login-link').click(function() {
+    $('.toboggan-unified #login-link', context).click(function () {
       $(this).addClass('lt-active').blur();
-      $('.toboggan-unified #register-link').removeClass('lt-active');
-      $('.toboggan-unified #login-form').show();
-      $('.toboggan-unified #register-form').hide();
+      $('.toboggan-unified #register-link', context).removeClass('lt-active');
+      $('.toboggan-unified #login-form', context).show();
+      $('.toboggan-unified #register-form', context).hide();
       $.ajax({
         url: "/user/login",
         success: function(data) {
           var title = data.match("<title>(.*?)</title>")[1];
           $('html head').find('title').text(title);
           $('h1.title').text(title.substring(0,title.indexOf('|')));
-        },
+        }
       });
       return false;
     });
 
-    switch(Drupal.settings.LoginToboggan.unifiedLoginActiveForm) {
+    switch(settings.LoginToboggan.unifiedLoginActiveForm) {
       case 'register':
-        $('.toboggan-unified #register-link').click();
+        $('.toboggan-unified #register-link', context).click();
         break;
       case 'login':
       default:
-        $('.toboggan-unified #login-link').click();
+        $('.toboggan-unified #login-link', context).click();
         break;
     }
   }

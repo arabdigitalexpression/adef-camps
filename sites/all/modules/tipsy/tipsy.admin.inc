@@ -5,10 +5,11 @@
  */
 function tipsy_admin($form, &$form_state) {
   $settings = _tipsy_get_settings();
+  $module_path = drupal_get_path('module', 'tipsy');
   $form = array();
 
-  $form['#attached']['js'][] = drupal_get_path('module', 'tipsy') . '/javascripts/tipsy.admin.js';
-  $form['#attached']['css'][] = drupal_get_path('module', 'tipsy') . '/stylesheets/tipsy.admin.css';
+  $form['#attached']['js'][] = $module_path . '/javascripts/tipsy.admin.js';
+  $form['#attached']['css'][] = $module_path . '/stylesheets/tipsy.admin.css';
 
   $form['drupal_forms'] = array(
     '#type' => 'fieldset',
@@ -186,13 +187,13 @@ function tipsy_options_form($settings = FALSE, $drupal_forms = FALSE) {
       '#type' => 'radios',
       '#title' => t('Source'),
       '#default_value' => $settings['options']['tooltip_content']['source'],
-      '#options' => array('attribute' => t('HTML attribute'), 'child' => t('Child element')),
+      '#options' => array('attribute' => t('HTML attribute'), 'child' => t('Child element'), 'sibling' => t("Sibling element")),
     );
     $form['tooltip_content']['selector'] = array(
       '#type' => 'textarea',
       '#title' => t('Selector'),
       '#default_value' => $settings['options']['tooltip_content']['selector'],
-      '#description' => t("The name of the HTML attribute or a selector pointing to the child element (e.g: .content). <br /> Refer to the module's README.txt for more information."),
+      '#description' => t("The name of the HTML attribute, or a selector pointing to the child or sibling element (e.g: .content). <br /> Refer to the module's README.txt for more information."),
       '#rows' => 1,
       '#maxlength' => 400,
     );
@@ -274,9 +275,6 @@ function tipsy_admin_validate($form, &$form_values) {
       }
       if (!is_numeric($rule['options']['offset']) || $rule['options']['offset'] == '') {
         form_set_error('rules][' . $delta .  '][options][offset', t('Invalid value'));
-      }
-      if (trim($rule['options']['tooltip_content']['selector']) == '') {
-        form_set_error('rules][' . $delta .  '][options][tooltip_content][selector', t("Invalid value set for title. Use <em>title</em> if you don't know what you are doing"));
       }
     }
   }
