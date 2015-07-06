@@ -10,137 +10,6 @@
 function content_types_field_default_field_instances() {
   $field_instances = array();
 
-  // Exported field_instance: 'node-badge-field_badge_image'
-  $field_instances['node-badge-field_badge_image'] = array(
-    'bundle' => 'badge',
-    'deleted' => 0,
-    'description' => '',
-    'display' => array(
-      'default' => array(
-        'label' => 'above',
-        'module' => 'image',
-        'settings' => array(
-          'image_link' => '',
-          'image_style' => '',
-        ),
-        'type' => 'image',
-        'weight' => 0,
-      ),
-      'teaser' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 0,
-      ),
-    ),
-    'entity_type' => 'node',
-    'field_name' => 'field_badge_image',
-    'label' => 'صورة',
-    'required' => 0,
-    'settings' => array(
-      'alt_field' => 0,
-      'default_image' => 0,
-      'file_directory' => 'images/badges',
-      'file_extensions' => 'png gif jpg jpeg',
-      'max_filesize' => '',
-      'max_resolution' => '',
-      'min_resolution' => '',
-      'title_field' => 0,
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 1,
-      'module' => 'image',
-      'settings' => array(
-        'preview_image_style' => 'thumbnail',
-        'progress_indicator' => 'throbber',
-      ),
-      'type' => 'image_image',
-      'weight' => -4,
-    ),
-  );
-
-  // Exported field_instance: 'node-badge-field_badge_level'
-  $field_instances['node-badge-field_badge_level'] = array(
-    'bundle' => 'badge',
-    'default_value' => NULL,
-    'deleted' => 0,
-    'description' => '',
-    'display' => array(
-      'default' => array(
-        'label' => 'above',
-        'module' => 'list',
-        'settings' => array(),
-        'type' => 'list_default',
-        'weight' => 2,
-      ),
-      'teaser' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 0,
-      ),
-    ),
-    'entity_type' => 'node',
-    'field_name' => 'field_badge_level',
-    'label' => 'مستوى',
-    'required' => 1,
-    'settings' => array(
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 1,
-      'module' => 'options',
-      'settings' => array(),
-      'type' => 'options_select',
-      'weight' => -2,
-    ),
-  );
-
-  // Exported field_instance: 'node-badge-field_badge_term'
-  $field_instances['node-badge-field_badge_term'] = array(
-    'bundle' => 'badge',
-    'default_value' => NULL,
-    'deleted' => 0,
-    'description' => '',
-    'display' => array(
-      'default' => array(
-        'label' => 'above',
-        'module' => 'entityreference',
-        'settings' => array(
-          'link' => FALSE,
-        ),
-        'type' => 'entityreference_label',
-        'weight' => 1,
-      ),
-      'teaser' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 0,
-      ),
-    ),
-    'entity_type' => 'node',
-    'field_name' => 'field_badge_term',
-    'label' => 'المجال أو الهدف التربوي المتعلق',
-    'required' => 1,
-    'settings' => array(
-      'behaviors' => array(
-        'taxonomy-index' => array(
-          'status' => TRUE,
-        ),
-      ),
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 1,
-      'module' => 'options',
-      'settings' => array(),
-      'type' => 'options_select',
-      'weight' => -3,
-    ),
-  );
-
   // Exported field_instance: 'node-participant-body'
   $field_instances['node-participant-body'] = array(
     'bundle' => 'participant',
@@ -497,7 +366,7 @@ function content_types_field_default_field_instances() {
       'file_extensions' => 'png gif jpg jpeg',
       'max_filesize' => '',
       'max_resolution' => '',
-      'min_resolution' => '',
+      'min_resolution' => '1200x1200',
       'title_field' => 0,
       'user_register_form' => FALSE,
     ),
@@ -505,7 +374,7 @@ function content_types_field_default_field_instances() {
       'active' => 1,
       'module' => 'image',
       'settings' => array(
-        'preview_image_style' => 'thumbnail',
+        'preview_image_style' => 'medium',
         'progress_indicator' => 'throbber',
       ),
       'type' => 'image_image',
@@ -796,6 +665,56 @@ function content_types_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'node-session-field_duration'
+  $field_instances['node-session-field_duration'] = array(
+    'bundle' => 'session',
+    'default_value' => array(
+      0 => array(
+        'value' => 120,
+      ),
+    ),
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'number',
+        'settings' => array(
+          'decimal_separator' => '.',
+          'prefix_suffix' => TRUE,
+          'scale' => 0,
+          'thousand_separator' => ' ',
+        ),
+        'type' => 'number_integer',
+        'weight' => 3,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_duration',
+    'label' => 'مدة',
+    'required' => 0,
+    'settings' => array(
+      'max' => '',
+      'min' => '',
+      'prefix' => '',
+      'suffix' => '',
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 0,
+      'module' => 'number',
+      'settings' => array(),
+      'type' => 'number',
+      'weight' => 0,
+    ),
+  );
+
   // Exported field_instance: 'node-session-field_serial'
   $field_instances['node-session-field_serial'] = array(
     'bundle' => 'session',
@@ -913,7 +832,7 @@ function content_types_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_buttons',
-      'weight' => 4,
+      'weight' => 5,
     ),
   );
 
@@ -932,6 +851,7 @@ function content_types_field_default_field_instances() {
           'multiple_from' => '',
           'multiple_number' => '',
           'multiple_to' => '',
+          'show_remaining_days' => FALSE,
         ),
         'type' => 'date_default',
         'weight' => 0,
@@ -1003,7 +923,7 @@ function content_types_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 2,
+      'weight' => 3,
     ),
   );
 
@@ -1048,7 +968,7 @@ function content_types_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'entityreference_autocomplete',
-      'weight' => 5,
+      'weight' => 6,
     ),
   );
 
@@ -1091,7 +1011,7 @@ function content_types_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'options_select',
-      'weight' => 3,
+      'weight' => 4,
     ),
   );
 
@@ -1462,7 +1382,8 @@ function content_types_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'taxonomy_term-locations-field_location_description'
+  // Exported field_instance:
+  // 'taxonomy_term-locations-field_location_description'
   $field_instances['taxonomy_term-locations-field_location_description'] = array(
     'bundle' => 'locations',
     'default_value' => NULL,
@@ -1575,7 +1496,6 @@ function content_types_field_default_field_instances() {
   t('الجنس');
   t('اللون');
   t('المجال');
-  t('المجال أو الهدف التربوي المتعلق');
   t('المجموعة');
   t('المشارك');
   t('الهدف التربوي');
@@ -1590,9 +1510,9 @@ function content_types_field_default_field_instances() {
   t('صورة');
   t('عدد الجلسات');
   t('في مجال');
+  t('مدة');
   t('مدربين');
   t('مدرسة');
-  t('مستوى');
   t('مشاركين');
   t('مكان');
   t('ملاحظات');
