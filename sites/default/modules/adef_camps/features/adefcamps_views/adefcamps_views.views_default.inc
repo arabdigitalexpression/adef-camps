@@ -285,6 +285,7 @@ function adefcamps_views_views_default_views() {
   $handler->display->display_options['arguments']['field_date_time_value']['table'] = 'field_data_field_date_time';
   $handler->display->display_options['arguments']['field_date_time_value']['field'] = 'field_date_time_value';
   $handler->display->display_options['arguments']['field_date_time_value']['default_action'] = 'not found';
+  $handler->display->display_options['arguments']['field_date_time_value']['default_argument_type'] = 'date';
   $handler->display->display_options['arguments']['field_date_time_value']['summary']['number_of_records'] = '0';
   $handler->display->display_options['arguments']['field_date_time_value']['summary']['format'] = 'default_summary';
   $handler->display->display_options['arguments']['field_date_time_value']['summary_options']['items_per_page'] = '25';
@@ -503,6 +504,7 @@ function adefcamps_views_views_default_views() {
   $handler->display->display_options['arguments']['field_date_time_value']['table'] = 'field_data_field_date_time';
   $handler->display->display_options['arguments']['field_date_time_value']['field'] = 'field_date_time_value';
   $handler->display->display_options['arguments']['field_date_time_value']['default_action'] = 'default';
+  $handler->display->display_options['arguments']['field_date_time_value']['default_argument_type'] = 'date';
   $handler->display->display_options['arguments']['field_date_time_value']['summary']['number_of_records'] = '0';
   $handler->display->display_options['arguments']['field_date_time_value']['summary']['format'] = 'default_summary';
   $handler->display->display_options['arguments']['field_date_time_value']['summary_options']['items_per_page'] = '25';
@@ -651,13 +653,6 @@ function adefcamps_views_views_default_views() {
   $handler->display->display_options['fields']['views_bulk_operations']['vbo_settings']['force_single'] = 0;
   $handler->display->display_options['fields']['views_bulk_operations']['vbo_settings']['entity_load_capacity'] = '10';
   $handler->display->display_options['fields']['views_bulk_operations']['vbo_operations'] = array(
-    'action::node_assign_owner_action' => array(
-      'selected' => 0,
-      'postpone_processing' => 0,
-      'skip_confirmation' => 0,
-      'override_label' => 0,
-      'label' => '',
-    ),
     'action::adef_camps_create_session_for_workshop' => array(
       'selected' => 1,
       'postpone_processing' => 0,
@@ -667,27 +662,6 @@ function adefcamps_views_views_default_views() {
     ),
     'action::views_bulk_operations_delete_item' => array(
       'selected' => 1,
-      'postpone_processing' => 0,
-      'skip_confirmation' => 0,
-      'override_label' => 0,
-      'label' => '',
-    ),
-    'action::views_bulk_operations_script_action' => array(
-      'selected' => 0,
-      'postpone_processing' => 0,
-      'skip_confirmation' => 0,
-      'override_label' => 0,
-      'label' => '',
-    ),
-    'action::node_make_sticky_action' => array(
-      'selected' => 0,
-      'postpone_processing' => 0,
-      'skip_confirmation' => 0,
-      'override_label' => 0,
-      'label' => '',
-    ),
-    'action::node_make_unsticky_action' => array(
-      'selected' => 0,
       'postpone_processing' => 0,
       'skip_confirmation' => 0,
       'override_label' => 0,
@@ -705,64 +679,6 @@ function adefcamps_views_views_default_views() {
           '_all_' => '_all_',
         ),
       ),
-    ),
-    'action::views_bulk_operations_argument_selector_action' => array(
-      'selected' => 0,
-      'skip_confirmation' => 0,
-      'override_label' => 0,
-      'label' => '',
-      'settings' => array(
-        'url' => '',
-      ),
-    ),
-    'action::node_promote_action' => array(
-      'selected' => 0,
-      'postpone_processing' => 0,
-      'skip_confirmation' => 0,
-      'override_label' => 0,
-      'label' => '',
-    ),
-    'action::node_publish_action' => array(
-      'selected' => 0,
-      'postpone_processing' => 0,
-      'skip_confirmation' => 0,
-      'override_label' => 0,
-      'label' => '',
-    ),
-    'action::node_unpromote_action' => array(
-      'selected' => 0,
-      'postpone_processing' => 0,
-      'skip_confirmation' => 0,
-      'override_label' => 0,
-      'label' => '',
-    ),
-    'action::node_save_action' => array(
-      'selected' => 0,
-      'postpone_processing' => 0,
-      'skip_confirmation' => 0,
-      'override_label' => 0,
-      'label' => '',
-    ),
-    'action::system_send_email_action' => array(
-      'selected' => 0,
-      'postpone_processing' => 0,
-      'skip_confirmation' => 0,
-      'override_label' => 0,
-      'label' => '',
-    ),
-    'action::node_unpublish_action' => array(
-      'selected' => 0,
-      'postpone_processing' => 0,
-      'skip_confirmation' => 0,
-      'override_label' => 0,
-      'label' => '',
-    ),
-    'action::node_unpublish_by_keyword_action' => array(
-      'selected' => 0,
-      'postpone_processing' => 0,
-      'skip_confirmation' => 0,
-      'override_label' => 0,
-      'label' => '',
     ),
   );
   /* Field: Content: Title */
@@ -835,15 +751,6 @@ function adefcamps_views_views_default_views() {
     'multiple_number' => '',
     'multiple_from' => '',
     'multiple_to' => '',
-  );
-  /* Field: Content: المجال أو الهدف التربوي المتعلق */
-  $handler->display->display_options['fields']['field_badge_term']['id'] = 'field_badge_term';
-  $handler->display->display_options['fields']['field_badge_term']['table'] = 'field_data_field_badge_term';
-  $handler->display->display_options['fields']['field_badge_term']['field'] = 'field_badge_term';
-  $handler->display->display_options['fields']['field_badge_term']['label'] = '';
-  $handler->display->display_options['fields']['field_badge_term']['element_label_colon'] = FALSE;
-  $handler->display->display_options['fields']['field_badge_term']['settings'] = array(
-    'link' => 0,
   );
   $handler->display->display_options['defaults']['filter_groups'] = FALSE;
   $handler->display->display_options['filter_groups']['groups'] = array(
@@ -1349,6 +1256,8 @@ function adefcamps_views_views_default_views() {
   $handler->display->display_options['arguments']['field_date_time_value']['field'] = 'field_date_time_value';
   $handler->display->display_options['arguments']['field_date_time_value']['default_action'] = 'default';
   $handler->display->display_options['arguments']['field_date_time_value']['default_argument_type'] = 'php';
+  $handler->display->display_options['arguments']['field_date_time_value']['default_argument_options']['code'] = '$period_date = adef_camps_get_period_date();
+return $period_date[\'year\'] . \'-\' . $period_date[\'month\'] . \'-\' . $period_date[\'day\'] . \'--P2D\';';
   $handler->display->display_options['arguments']['field_date_time_value']['summary']['number_of_records'] = '0';
   $handler->display->display_options['arguments']['field_date_time_value']['summary']['format'] = 'default_summary';
   $handler->display->display_options['arguments']['field_date_time_value']['summary_options']['items_per_page'] = '25';
@@ -1575,6 +1484,7 @@ function adefcamps_views_views_default_views() {
   $handler->display->display_options['arguments']['field_date_time_value']['table'] = 'field_data_field_date_time';
   $handler->display->display_options['arguments']['field_date_time_value']['field'] = 'field_date_time_value';
   $handler->display->display_options['arguments']['field_date_time_value']['default_action'] = 'default';
+  $handler->display->display_options['arguments']['field_date_time_value']['default_argument_type'] = 'date';
   $handler->display->display_options['arguments']['field_date_time_value']['summary']['number_of_records'] = '0';
   $handler->display->display_options['arguments']['field_date_time_value']['summary']['format'] = 'default_summary';
   $handler->display->display_options['arguments']['field_date_time_value']['summary_options']['items_per_page'] = '25';
@@ -1890,6 +1800,7 @@ function adefcamps_views_views_default_views() {
   $handler->display->display_options['arguments']['field_date_time_value']['field'] = 'field_date_time_value';
   $handler->display->display_options['arguments']['field_date_time_value']['relationship'] = 'reverse_field_participants_node';
   $handler->display->display_options['arguments']['field_date_time_value']['default_action'] = 'default';
+  $handler->display->display_options['arguments']['field_date_time_value']['default_argument_type'] = 'date';
   $handler->display->display_options['arguments']['field_date_time_value']['summary']['number_of_records'] = '0';
   $handler->display->display_options['arguments']['field_date_time_value']['summary']['format'] = 'default_summary';
   $handler->display->display_options['arguments']['field_date_time_value']['summary_options']['items_per_page'] = '25';
@@ -2140,95 +2051,6 @@ function adefcamps_views_views_default_views() {
   $handler->display->display_options['arguments']['nid']['summary']['format'] = 'default_summary';
   $handler->display->display_options['arguments']['nid']['summary_options']['items_per_page'] = '25';
 
-  /* Display: Badges */
-  $handler = $view->new_display('block', 'Badges', 'block_badges');
-  $handler->display->display_options['defaults']['pager'] = FALSE;
-  $handler->display->display_options['pager']['type'] = 'none';
-  $handler->display->display_options['pager']['options']['offset'] = '0';
-  $handler->display->display_options['defaults']['relationships'] = FALSE;
-  /* Relationship: Entity Reference: Referenced Entity */
-  $handler->display->display_options['relationships']['field_badge_term_target_id']['id'] = 'field_badge_term_target_id';
-  $handler->display->display_options['relationships']['field_badge_term_target_id']['table'] = 'field_data_field_badge_term';
-  $handler->display->display_options['relationships']['field_badge_term_target_id']['field'] = 'field_badge_term_target_id';
-  $handler->display->display_options['relationships']['field_badge_term_target_id']['label'] = 'Badge Term';
-  $handler->display->display_options['defaults']['fields'] = FALSE;
-  /* Field: Content: Title */
-  $handler->display->display_options['fields']['title']['id'] = 'title';
-  $handler->display->display_options['fields']['title']['table'] = 'node';
-  $handler->display->display_options['fields']['title']['field'] = 'title';
-  $handler->display->display_options['fields']['title']['label'] = '';
-  $handler->display->display_options['fields']['title']['alter']['word_boundary'] = FALSE;
-  $handler->display->display_options['fields']['title']['alter']['ellipsis'] = FALSE;
-  $handler->display->display_options['fields']['title']['element_label_colon'] = FALSE;
-  $handler->display->display_options['fields']['title']['link_to_node'] = FALSE;
-  /* Field: Content: صورة */
-  $handler->display->display_options['fields']['field_badge_image']['id'] = 'field_badge_image';
-  $handler->display->display_options['fields']['field_badge_image']['table'] = 'field_data_field_badge_image';
-  $handler->display->display_options['fields']['field_badge_image']['field'] = 'field_badge_image';
-  $handler->display->display_options['fields']['field_badge_image']['label'] = '';
-  $handler->display->display_options['fields']['field_badge_image']['element_label_colon'] = FALSE;
-  $handler->display->display_options['fields']['field_badge_image']['click_sort_column'] = 'fid';
-  $handler->display->display_options['fields']['field_badge_image']['settings'] = array(
-    'image_style' => 'icon_medium',
-    'image_link' => '',
-  );
-  /* Field: Taxonomy term: Term ID */
-  $handler->display->display_options['fields']['tid']['id'] = 'tid';
-  $handler->display->display_options['fields']['tid']['table'] = 'taxonomy_term_data';
-  $handler->display->display_options['fields']['tid']['field'] = 'tid';
-  $handler->display->display_options['fields']['tid']['relationship'] = 'field_badge_term_target_id';
-  $handler->display->display_options['fields']['tid']['label'] = '';
-  $handler->display->display_options['fields']['tid']['exclude'] = TRUE;
-  $handler->display->display_options['fields']['tid']['element_label_colon'] = FALSE;
-  /* Field: Taxonomy term: Name */
-  $handler->display->display_options['fields']['name']['id'] = 'name';
-  $handler->display->display_options['fields']['name']['table'] = 'taxonomy_term_data';
-  $handler->display->display_options['fields']['name']['field'] = 'name';
-  $handler->display->display_options['fields']['name']['relationship'] = 'field_badge_term_target_id';
-  $handler->display->display_options['fields']['name']['label'] = '';
-  $handler->display->display_options['fields']['name']['element_label_colon'] = FALSE;
-  /* Field: Content: مستوى */
-  $handler->display->display_options['fields']['field_badge_level']['id'] = 'field_badge_level';
-  $handler->display->display_options['fields']['field_badge_level']['table'] = 'field_data_field_badge_level';
-  $handler->display->display_options['fields']['field_badge_level']['field'] = 'field_badge_level';
-  $handler->display->display_options['fields']['field_badge_level']['label'] = '';
-  $handler->display->display_options['fields']['field_badge_level']['exclude'] = TRUE;
-  $handler->display->display_options['fields']['field_badge_level']['element_label_colon'] = FALSE;
-  $handler->display->display_options['fields']['field_badge_level']['type'] = 'list_key';
-  $handler->display->display_options['defaults']['arguments'] = FALSE;
-  /* Contextual filter: Content: Has taxonomy term ID */
-  $handler->display->display_options['arguments']['tid']['id'] = 'tid';
-  $handler->display->display_options['arguments']['tid']['table'] = 'taxonomy_index';
-  $handler->display->display_options['arguments']['tid']['field'] = 'tid';
-  $handler->display->display_options['arguments']['tid']['default_argument_type'] = 'fixed';
-  $handler->display->display_options['arguments']['tid']['summary']['number_of_records'] = '0';
-  $handler->display->display_options['arguments']['tid']['summary']['format'] = 'default_summary';
-  $handler->display->display_options['arguments']['tid']['summary_options']['items_per_page'] = '25';
-  /* Contextual filter: Content: مستوى (field_badge_level) */
-  $handler->display->display_options['arguments']['field_badge_level_value']['id'] = 'field_badge_level_value';
-  $handler->display->display_options['arguments']['field_badge_level_value']['table'] = 'field_data_field_badge_level';
-  $handler->display->display_options['arguments']['field_badge_level_value']['field'] = 'field_badge_level_value';
-  $handler->display->display_options['arguments']['field_badge_level_value']['default_argument_type'] = 'fixed';
-  $handler->display->display_options['arguments']['field_badge_level_value']['summary']['number_of_records'] = '0';
-  $handler->display->display_options['arguments']['field_badge_level_value']['summary']['format'] = 'default_summary';
-  $handler->display->display_options['arguments']['field_badge_level_value']['summary_options']['items_per_page'] = '25';
-  $handler->display->display_options['defaults']['filter_groups'] = FALSE;
-  $handler->display->display_options['defaults']['filters'] = FALSE;
-  /* Filter criterion: Content: Published */
-  $handler->display->display_options['filters']['status']['id'] = 'status';
-  $handler->display->display_options['filters']['status']['table'] = 'node';
-  $handler->display->display_options['filters']['status']['field'] = 'status';
-  $handler->display->display_options['filters']['status']['value'] = 1;
-  $handler->display->display_options['filters']['status']['group'] = 1;
-  $handler->display->display_options['filters']['status']['expose']['operator'] = FALSE;
-  /* Filter criterion: Content: Type */
-  $handler->display->display_options['filters']['type']['id'] = 'type';
-  $handler->display->display_options['filters']['type']['table'] = 'node';
-  $handler->display->display_options['filters']['type']['field'] = 'type';
-  $handler->display->display_options['filters']['type']['value'] = array(
-    'badge' => 'badge',
-  );
-
   /* Display: Edugoals Icons */
   $handler = $view->new_display('block', 'Edugoals Icons', 'block_edugoals_icons');
   $handler->display->display_options['defaults']['style_plugin'] = FALSE;
@@ -2366,10 +2188,6 @@ function adefcamps_views_views_default_views() {
     t('بريد الكتروني'),
     t('تليفون'),
     t('مدرسة'),
-    t('Badges'),
-    t('Badge Term'),
-    t('.'),
-    t(','),
     t('Edugoals Icons'),
     t('Edugoals'),
   );
