@@ -62,7 +62,7 @@
   });
 
   function getClassByPrefix(item, prefix) {
-    classes = $(item).attr('class').split(" ");
+    classes = $(item).prop('class').split(" ");
     for (var i = 0; i < classes.length; i++) {
       if (classes[i].indexOf(prefix) == 0) {
         return classes[i];
@@ -74,7 +74,7 @@
   function updateSelected() {
     var selected = new Array();
     $('.session.selected').each(function(pos, session) {
-      cssclasses = $(session).attr('class').split(' ');
+      cssclasses = $(session).prop('class').split(' ');
       for (i = 0; i < cssclasses.length; i++) {
         if (cssclasses[i].substr(0, 11) == 'timespaceid') {
           timespaceid = cssclasses[i].replace('timespaceid-', '');

@@ -30,26 +30,6 @@ function adef_camps_site_settings_menu_default_menu_links() {
     'weight' => -43,
     'customized' => 1,
   );
-  // Exported menu link: main-menu_-:adefcamps/badges/report
-  $menu_links['main-menu_-:adefcamps/badges/report'] = array(
-    'menu_name' => 'main-menu',
-    'link_path' => 'adefcamps/badges/report',
-    'router_path' => 'adefcamps/badges/report',
-    'link_title' => 'تقرير الشارات',
-    'options' => array(
-      'attributes' => array(
-        'title' => '',
-      ),
-      'identifier' => 'main-menu_-:adefcamps/badges/report',
-    ),
-    'module' => 'menu',
-    'hidden' => 0,
-    'external' => 0,
-    'has_children' => 0,
-    'expanded' => 0,
-    'weight' => -48,
-    'customized' => 1,
-  );
   // Exported menu link: main-menu_-:camps/schedule/print
   $menu_links['main-menu_-:camps/schedule/print'] = array(
     'menu_name' => 'main-menu',
@@ -170,6 +150,7 @@ function adef_camps_site_settings_menu_default_menu_links() {
     'weight' => -45,
     'customized' => 1,
   );
+
   // Translatables
   // Included for use with string extractors like potx.
   t('اضف محتوى يدويا');
@@ -178,9 +159,7 @@ function adef_camps_site_settings_menu_default_menu_links() {
   t('المشاركون');
   t('الورش');
   t('تصنيفات');
-  t('تقرير الشارات');
   t('طباعة الجدول');
-
 
   return $menu_links;
 }

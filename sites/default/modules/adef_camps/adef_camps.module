@@ -76,28 +76,11 @@ function adef_camps_menu() {
       'file' => 'adef_camps.pages.inc',
       'weight' => 98,
   );
-  $items['node/%node/badges'] = array(
-      'title' => 'Badges',
-      'page callback' => 'adef_camps_badges',
-      'page arguments' => array(1),
-      'access arguments' => array(1),
-      'access callback' => 'adef_camps_participant_access',
-      'type' => MENU_LOCAL_TASK,
-      'file' => 'adef_camps.pages.inc',
-      'weight' => 99,
-  );
   $items['adefcamps/registration/slots'] = array(
       'type' => MENU_CALLBACK,
       'access arguments' => array('register participants'),
       'page callback' => 'adef_camps_registration_slots',
       'file' => 'adef_camps.api.inc'
-  );
-  $items['adefcamps/badges/report'] = array(
-      'title' => 'Full Badges Report',
-      'type' => MENU_CALLBACK,
-      'access arguments' => array('register participants'),
-      'page callback' => 'adef_camps_badges_report',
-      'file' => 'adef_camps.pages.inc'
   );
 //  $items['node/%node/attendance'] = array(
 //      'title' => 'Attendance',
@@ -131,6 +114,25 @@ function adef_camps_menu() {
   return $items;
 }
 
+/**
+ * Implements hook_views_pre_render
+ */
+function adef_camps_views_pre_render(&$view) {
+  switch ($view->name . "-" . $view->current_display) {
+    case 'content_blocks-page_schedule':
+      drupal_add_js(drupal_get_path('module', 'adef_camps') . '/js/adef_camps_ui_common.js');
+      drupal_add_js(drupal_get_path('module', 'adef_camps') . '/js/adef_camps_schedule.js');
+      break;
+    default:
+      break;
+  }
+}
+
+/**
+ * Access callback for particpants incidents and registration
+ * @param type $node
+ * @return boolean
+ */
 function adef_camps_participant_access($node) {
   if ($node->type == 'participant' && (user_access('register participants') || user_access('add incidents') || user_access('add achievements'))) {
     return TRUE;
@@ -138,6 +140,12 @@ function adef_camps_participant_access($node) {
   return FALSE;
 }
 
+/**
+ * Access callback function for attendance
+ * @global type $user
+ * @param type $node
+ * @return boolean
+ */
 function adef_camps_attendance_access($node) {
   if ($node->type == 'timespace') {
     if (user_access('session attendance')) {
