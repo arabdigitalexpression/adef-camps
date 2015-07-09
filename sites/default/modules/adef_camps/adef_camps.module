@@ -129,6 +129,16 @@ function adef_camps_views_pre_render(&$view) {
 }
 
 /**
+ * Implementation of hook_views_api().
+ */
+function adef_camps_views_api() {
+  return array(
+    'api' => 3,
+    'template path' => drupal_get_path('module', 'adef_camps') . '/templates',
+  );
+}
+
+/**
  * Access callback for particpants incidents and registration
  * @param type $node
  * @return boolean
@@ -287,6 +297,36 @@ function adef_camps_create_session_for_workshop($workshop_node) {
  */
 
 function adef_camps_get_period_date() {
+  $cur_date = new DateTime();
+  $switch_hour = variable_get('adef_camps_switch_hour', 21);
+  $hours_to_switch_hour = 24 - $switch_hour;
+  $start_date = variable_get('adef_camps_start_date', array('year' => 2013, 'month' => 8, 'day' => 16));
+  $start_date = date_create($start_date['year'] . '-' . $start_date['month'] . '-' . $start_date['day']);
+  $start_date->sub(new DateInterval('PT'. $hours_to_switch_hour . 'H'));
+  $breakpoints = variable_get('adef_camps_daybreakpoints', '2');
+  $breakpoints = explode(',', $breakpoints);
+  $end_date = new DateTime;
+  if (count($breakpoints) == 1) {
+    
+  } else {
+    for ($i = 1; $i < count($breakpoints); $i++) {
+      $bp = $breakpoints[$i];
+      $start_date->add(new DateInterval('P'. $breakpoints[$i-1] .'D'));
+      $end_date->setTimestamp($start_date->getTimeStamp() + (24 * 60 * 60 * $bp));
+      if ($cur_date >= $start_date && $cur_date < $end_date) {
+        $start_date->add(new DateInterval('PT'. $hours_to_switch_hour . 'H'));
+        $start_date = getdate($start_date->getTimeStamp());
+        return array('year' => $start_date['year'], 'month' => $start_date['mon'], 'day' => $start_date['mday']);
+      }
+    }
+  }
+  return array(array('year' => $start_date, 'month' => $start_date['month'], 'day' => $start_date['mday']));
+  if (is_array($breakpoints)) {
+    $breakdates[] = date_create($start_date['year'] . '-' . $start_date['month'] . '-' . $start_date['day']);
+  } else {
+    
+  }
+  // old code
   $cur_date = getdate();
   $day = $cur_date['mday'];
   $hour = $cur_date['hours'];

@@ -6,12 +6,14 @@
     scheduleParams = Drupal.adefCamps.getScheuleParams(sessions);
 
     var fullWidth = $(container).width() - $(sessions).first().width();
-
     var newRow = true;
     var currentDayCode = "";
     var zoomFactor = 2;
     if (zoomLevel == 1) {
       zoomFactor = fullWidth / (scheduleParams.dayLength * daysToShow);
+    } else {
+      var fullWidthWithHeader = (scheduleParams.dayLength * daysToShow * zoomFactor) + $(sessions).first().width();
+      $(container).parent().outerWidth(fullWidthWithHeader);
     }
     var dayCredit = 0;
 
@@ -19,13 +21,14 @@
       if ($(this).prop('tagName') == 'H3') {
         newRow = true;
       } else {
-        var time = Drupal.adefCamps.getClassData($(this), 'start');
+        var dayRowShift = 0;
+        var time = String($(this).data('start'));// Drupal.adefCamps.getClassData($(this), 'start');
         var slotStart = Drupal.adefCamps.timeToMinutes(time) - scheduleParams.earliest;
-        var slotWidth = parseInt(Drupal.adefCamps.getClassData($(this), 'duration', 120));
-        dayCode = Drupal.adefCamps.getClassData($(this), 'daycode');
+        var slotWidth = parseInt($(this).data('duration'));
+        dayCode = String($(this).data('daycode'));
         if (dayCode != currentDayCode) { //new day
           if (!newRow) { //same row
-            slotStart += (scheduleParams.dayLength - dayCredit);
+            dayRowShift = (scheduleParams.dayLength - dayCredit);
           }
           dayCredit = 0;
           currentDayCode = dayCode;
@@ -35,7 +38,7 @@
           newRow = false;
         }
         slotStart -= dayCredit;
-        $(this).css("margin-right", slotStart * zoomFactor + "px").outerWidth((slotWidth * zoomFactor)-5);
+        $(this).css("margin-right", (slotStart + dayRowShift) * zoomFactor + "px").outerWidth((slotWidth * zoomFactor) - 5); //need to use outerWidth properly with no manual padding calculation
         dayCredit += (slotWidth + slotStart);
       }
 
@@ -50,10 +53,9 @@
     var currentDay = 0;
     $(sessions).each(function () {
       if ($(this).prop('tagName') != 'H3') {
-        time = Drupal.adefCamps.getClassData($(this), 'start');
+        time = String($(this).data('start'));
         timeInMinutes = Drupal.adefCamps.timeToMinutes(time);
-        timeToEnd = timeInMinutes + parseInt(Drupal.adefCamps.getClassData($(this), 'duration', 120));
-
+        timeToEnd = timeInMinutes + parseInt($(this).data('duration'));
         if (time < earliest) {
           earliest = time;
         }
@@ -67,28 +69,6 @@
     dayLength = latest - earliest;
 
     return {'earliest': earliest, 'latest': latest, 'dayLength': dayLength};
-
-    var curDayCode = "";
-    $(sessions).each(function () {
-      if ($(this).prop('tagName') == 'H3') {
-        if (dayLength < currentDay) {
-          dayLength = currentDay;
-        }
-        currentDay = 0;
-      } else {
-        time = Drupal.adefCamps.getClassData($(this), 'start')
-        timeInMinutes = Drupal.adefCamps.timeToMinutes(time)
-        timeFromEarliest = timeInMinutes - earliest;
-
-        dayCode = Drupal.adefCamps.getClassData($(this), 'daycode');
-        if (curDayCode != dayCode) {
-          currentDay += timeFromEarliest;
-        } else {
-          currentDay += Drupal.adefCamps.timeToMinutes(time) - currentDay - timeFromEarliest;
-        }
-        currentDay += parseInt(Drupal.adefCamps.getClassData($(this), 'duration'));
-      }
-    });
   };
 
   Drupal.adefCamps.getClassByPrefix = function (item, prefix) {

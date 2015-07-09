@@ -4,14 +4,15 @@
   getSlots();
   $().ready(function() {
     //prepare sessions interaction
+    Drupal.adefCamps.formatSchedule('#available-sessions .view-content', 2, 3);
     $('.tooltip').hide();
     $('.session').mouseover(function() {
       if (getClassByPrefix($(this), 'id-') == 'id-') {
         return;
       }
       $('.' + getClassByPrefix($(this), 'id-')).addClass('repeated');
-      if ($('.' + getClassByPrefix($(this), 'workshop-') + '.selected').length == 0) {
-        $('.' + getClassByPrefix($(this), 'workshop-')).not('.' + getClassByPrefix($(this), 'id-')).addClass('required');
+      if ($('.' + getClassByPrefix($(this), 'w-') + '.selected').length == 0) {
+        $('.' + getClassByPrefix($(this), 'w-')).not('.' + getClassByPrefix($(this), 'id-')).addClass('required');
       }
       $(this).removeClass('repeated');
       if (!$(this).hasClass('disabled')) {
@@ -19,8 +20,8 @@
       }
     }).mouseleave(function() {
       $('.' + getClassByPrefix($(this), 'id-')).removeClass('repeated');
-      if ((!$(this).hasClass('selected')) && $('.' + getClassByPrefix($(this), 'workshop-') + '.selected').length == 0) {
-        $('.' + getClassByPrefix($(this), 'workshop-')).removeClass('required');
+      if ((!$(this).hasClass('selected')) && $('.' + getClassByPrefix($(this), 'w-') + '.selected').length == 0) {
+        $('.' + getClassByPrefix($(this), 'w-')).removeClass('required');
       }
       $(this).children('.tooltip').hide();
     }).click(function() {
@@ -32,13 +33,13 @@
       }
       if ($(this).hasClass('selected')) {
         $(this).removeClass('selected');
-        $('.' + getClassByPrefix($(this), 'timecode-')).removeClass('disabled');
-        if ($('.' + getClassByPrefix($(this), 'workshop-') + '.selected').not('.' + getClassByPrefix($(this), 'id-')).length > 0
+        $('.' + getClassByPrefix($(this), 'tc-')).removeClass('disabled');
+        if ($('.' + getClassByPrefix($(this), 'w-') + '.selected').not('.' + getClassByPrefix($(this), 'id-')).length > 0
                 && $('.' + getClassByPrefix($(this), 'id-') + '.selected').length == 0) {
           $('.' + getClassByPrefix($(this), 'id-')).addClass('required');
         }
       } else {
-        $('.' + getClassByPrefix($(this), 'timecode-')).addClass('disabled');
+        $('.' + getClassByPrefix($(this), 'tc-')).addClass('disabled');
         $(this).addClass('selected');
         $('.' + getClassByPrefix($(this), 'id-')).removeClass('required');
       }
@@ -49,16 +50,16 @@
     selected = $('input[name=timespace]').val();
     selected_array = selected.split(',');
     for (var i = 0; i < selected_array.length; i++) {
-      $('.session.timespaceid-' + selected_array[i]).click();
+      $('.session.zkid-' + selected_array[i]).click();
     }
     //resize container to fit width of schedule for scrolling
-    firstLocation = $('#available-sessions h3').first();
-    slotsInLocation = firstLocation.nextUntil('h3','.session');
-    totalWidth = firstLocation.outerWidth();
-    for (i=0;i < slotsInLocation.length;i++) {
-      totalWidth += $(slotsInLocation[i]).outerWidth();
-    }
-    $('#available-sessions div.view').width(totalWidth);
+//    firstLocation = $('#available-sessions h3').first();
+//    slotsInLocation = firstLocation.nextUntil('h3','.session');
+//    totalWidth = firstLocation.outerWidth();
+//    for (i=0;i < slotsInLocation.length;i++) {
+//      totalWidth += $(slotsInLocation[i]).outerWidth();
+//    }
+//    $('#available-sessions div.view').width(totalWidth);
   });
 
   function getClassByPrefix(item, prefix) {
@@ -76,11 +77,11 @@
     $('.session.selected').each(function(pos, session) {
       cssclasses = $(session).prop('class').split(' ');
       for (i = 0; i < cssclasses.length; i++) {
-        if (cssclasses[i].substr(0, 11) == 'timespaceid') {
-          timespaceid = cssclasses[i].replace('timespaceid-', '');
+        if (cssclasses[i].substr(0, 11) == 'zkid') {
+          zkid = cssclasses[i].replace('zkid-', '');
         }
       }
-      selected[pos] = timespaceid;
+      selected[pos] = zkid;
     })
     $('input[name=timespace]').val(selected.toString());
   }
@@ -94,7 +95,7 @@
         } else {
           message = Drupal.t("No slots");
         }
-        $('.timespaceid-' + key + ' .slots').html(message);
+        $('.zkid-' + key + ' .slots').html(message);
       });
     });
   }

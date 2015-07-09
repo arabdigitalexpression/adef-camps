@@ -14,10 +14,16 @@ function adef_camps_configure_form($form, &$form_state) {
           'day' => getdate()['mday'],
       )),
   );
+  $form['day_breakpoints'] = array(
+      '#type' => 'textfield',
+      '#title' => t('Day breakpoints'),
+      '#description' => t('Session registartion takes place at every breakpoint showing number of days until next breakpoint. Separate breakpoints by comma. If you enter one breakpoint only it will apply uniformly to the camp. Example: "2,4,3,2" will show 4 days from day 2, 3 days from day 4, and 2 days from day 3 (assuming they are the last 2 days). "3" will show 3 days to register every 3 days.'),
+      '#default_value' => strval(variable_get('adef_camps_daybreakpoints', '2')),
+  );
   $form['switch_hour'] = array(
       '#type' => 'textfield',
       '#title' => t('Switch hour'),
-      '#description' => t('Which hour should the system use to switch to the next two day schedule. Use 24 hour format. Example: "22" for 10:00 PM.'),
+      '#description' => t('Which hour should the system use to switch to the next set of days schedule. Use 24 hour format. Example: "22" for 10:00 PM.'),
       '#default_value' => strval(variable_get('adef_camps_switch_hour', 21)),
       '#size' => 2,
   );
@@ -31,6 +37,7 @@ function adef_camps_configure_form($form, &$form_state) {
 function adef_camps_configure_form_submit($form, &$form_state) {
   variable_set('adef_camps_start_date', $form_state['values']['start_date']);
   variable_set('adef_camps_switch_hour', intval($form_state['values']['switch_hour']));
+  variable_set('adef_camps_daybreakpoints', $form_state['values']['day_breakpoints']);
   drupal_set_message(t('Configuration was saved.'));
 }
 

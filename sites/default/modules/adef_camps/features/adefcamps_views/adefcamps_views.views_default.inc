@@ -65,7 +65,7 @@ function adefcamps_views_views_default_views() {
       'rendered_strip' => 0,
     ),
   );
-  $handler->display->display_options['style_options']['row_class'] = 'session id-[nid_1] workshop-[nid] timecode-[field_date_time_1][field_date_time] timespaceid-[nid_2] color-[field_color]';
+  $handler->display->display_options['style_options']['row_class'] = 'session id-[nid_1] w-[nid] tc-[field_date_time_1][field_date_time] zkid-[nid_2] color-[field_color]';
   $handler->display->display_options['style_options']['default_row_class'] = FALSE;
   $handler->display->display_options['style_options']['row_class_special'] = FALSE;
   $handler->display->display_options['defaults']['style_options'] = FALSE;
@@ -269,6 +269,18 @@ function adefcamps_views_views_default_views() {
   $handler->display->display_options['fields']['name_1']['alter']['text'] = '[body]<br/>[name_1]<br/>[field_trainers]';
   $handler->display->display_options['fields']['name_1']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['name_1']['element_wrapper_class'] = 'tooltip';
+  /* Field: Content: مدة */
+  $handler->display->display_options['fields']['field_duration']['id'] = 'field_duration';
+  $handler->display->display_options['fields']['field_duration']['table'] = 'field_data_field_duration';
+  $handler->display->display_options['fields']['field_duration']['field'] = 'field_duration';
+  $handler->display->display_options['fields']['field_duration']['relationship'] = 'field_session_target_id';
+  $handler->display->display_options['fields']['field_duration']['label'] = '';
+  $handler->display->display_options['fields']['field_duration']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['field_duration']['type'] = 'number_unformatted';
+  $handler->display->display_options['fields']['field_duration']['settings'] = array(
+    'thousand_separator' => ' ',
+    'prefix_suffix' => 1,
+  );
   $handler->display->display_options['defaults']['sorts'] = FALSE;
   /* Sort criterion: Taxonomy term: Weight */
   $handler->display->display_options['sorts']['weight']['id'] = 'weight';
@@ -289,6 +301,8 @@ function adefcamps_views_views_default_views() {
   $handler->display->display_options['arguments']['field_date_time_value']['summary']['number_of_records'] = '0';
   $handler->display->display_options['arguments']['field_date_time_value']['summary']['format'] = 'default_summary';
   $handler->display->display_options['arguments']['field_date_time_value']['summary_options']['items_per_page'] = '25';
+  $handler->display->display_options['arguments']['field_date_time_value']['granularity'] = 'day';
+  $handler->display->display_options['arguments']['field_date_time_value']['granularity_reset'] = 0;
   /* Contextual filter: Content: Nid */
   $handler->display->display_options['arguments']['nid']['id'] = 'nid';
   $handler->display->display_options['arguments']['nid']['table'] = 'node';
@@ -386,7 +400,7 @@ function adefcamps_views_views_default_views() {
       'rendered_strip' => 1,
     ),
   );
-  $handler->display->display_options['style_options']['row_class'] = 'session id-[nid_1] workshop-[nid] duration-[field_duration] daycode-[field_date_time_1] start-[field_date_time]';
+  $handler->display->display_options['style_options']['row_class'] = 'session id-[nid_1] w-[nid] d-[field_duration] daycode-[field_date_time_1] start-[field_date_time]';
   $handler->display->display_options['style_options']['default_row_class'] = FALSE;
   $handler->display->display_options['style_options']['row_class_special'] = FALSE;
   $handler->display->display_options['defaults']['style_options'] = FALSE;
@@ -507,7 +521,9 @@ function adefcamps_views_views_default_views() {
   $handler->display->display_options['fields']['field_date_time_1']['field'] = 'field_date_time';
   $handler->display->display_options['fields']['field_date_time_1']['label'] = '';
   $handler->display->display_options['fields']['field_date_time_1']['exclude'] = TRUE;
+  $handler->display->display_options['fields']['field_date_time_1']['element_type'] = '0';
   $handler->display->display_options['fields']['field_date_time_1']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['field_date_time_1']['element_default_classes'] = FALSE;
   $handler->display->display_options['fields']['field_date_time_1']['settings'] = array(
     'format_type' => 'day_code',
     'fromto' => 'both',
