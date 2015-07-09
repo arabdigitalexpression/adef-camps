@@ -190,3 +190,9 @@ ul.inline-list li {
   height: 100%;
   overflow-y: scroll;
 }*/
+
+.day-header {
+  float: left;
+  text-align: right;
+  padding: 5px 15px 5px 0;
+}

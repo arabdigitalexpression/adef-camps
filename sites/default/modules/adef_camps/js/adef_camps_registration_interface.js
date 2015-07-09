@@ -4,7 +4,7 @@
   getSlots();
   $().ready(function() {
     //prepare sessions interaction
-    Drupal.adefCamps.formatSchedule('#available-sessions .view-content', 2, 3);
+    Drupal.adefCamps.formatSchedule('#available-sessions .view-content', 2, adefCampsDaysToShow, adefCampsStartDate);
     $('.tooltip').hide();
     $('.session').mouseover(function() {
       if (getClassByPrefix($(this), 'id-') == 'id-') {

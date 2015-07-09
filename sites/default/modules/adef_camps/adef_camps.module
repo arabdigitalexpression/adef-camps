@@ -309,14 +309,15 @@ function adef_camps_get_period_date() {
   if (count($breakpoints) == 1) {
     
   } else {
-    for ($i = 1; $i < count($breakpoints); $i++) {
+    for ($i = 1; $i < (count($breakpoints)); $i++) {
       $bp = $breakpoints[$i];
       $start_date->add(new DateInterval('P'. $breakpoints[$i-1] .'D'));
       $end_date->setTimestamp($start_date->getTimeStamp() + (24 * 60 * 60 * $bp));
       if ($cur_date >= $start_date && $cur_date < $end_date) {
         $start_date->add(new DateInterval('PT'. $hours_to_switch_hour . 'H'));
         $start_date = getdate($start_date->getTimeStamp());
-        return array('year' => $start_date['year'], 'month' => $start_date['mon'], 'day' => $start_date['mday']);
+        $days_to_show = $breakpoints[$i];
+        return array('year' => $start_date['year'], 'month' => $start_date['mon'], 'day' => $start_date['mday'], 'days_to_show' => $days_to_show);
       }
     }
   }

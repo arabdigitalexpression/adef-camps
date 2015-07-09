@@ -1,21 +1,38 @@
 (function ($) {
+  Date.prototype.getMonthName = function () {
+    month_names = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    return month_names[this.getMonth()];
+  }
+
+  Date.prototype.getWeekdayName = function () {
+    month_names = ['Sunday', 'Monday', 'Tuesday', 'Wednedsay', 'Thursday', 'Friday', 'Saturday'];
+    return month_names[this.getDay()];
+  }
+
   Drupal.adefCamps = {};
 
-  Drupal.adefCamps.formatSchedule = function (container, zoomLevel, daysToShow) {
+  Drupal.adefCamps.formatSchedule = function (container, zoomLevel, daysToShow, startDate) {
     sessions = $(container).children();
     scheduleParams = Drupal.adefCamps.getScheuleParams(sessions);
 
-    var fullWidth = $(container).width() - $(sessions).first().width();
     var newRow = true;
     var currentDayCode = "";
+    var dayCredit = 0;
+    var extraRowPaddingForDate = 0;
+    if (daysToShow > 1) {
+      var headersToShow = daysToShow;
+      extraRowPaddingForDate = 150;
+      var dayHeader = $('<div></div>');
+      $(dayHeader).css('width', extraRowPaddingForDate).addClass('day-header');
+    }
+    var fullWidth = $(container).width() - $(sessions).first().width();
     var zoomFactor = 2;
     if (zoomLevel == 1) {
       zoomFactor = fullWidth / (scheduleParams.dayLength * daysToShow);
     } else {
-      var fullWidthWithHeader = (scheduleParams.dayLength * daysToShow * zoomFactor) + $(sessions).first().width();
+      var fullWidthWithHeader = (scheduleParams.dayLength * daysToShow * zoomFactor) + $(sessions).first().width() + (daysToShow * extraRowPaddingForDate);
       $(container).parent().outerWidth(fullWidthWithHeader);
     }
-    var dayCredit = 0;
 
     $(sessions).each(function () {
       if ($(this).prop('tagName') == 'H3') {
@@ -27,8 +44,26 @@
         var slotWidth = parseInt($(this).data('duration'));
         dayCode = String($(this).data('daycode'));
         if (dayCode != currentDayCode) { //new day
+          if (daysToShow > 1) {
+            if (headersToShow > 0) {
+              var headerDate = new Date(dayCode);
+              $(dayHeader).html(Drupal.t(headerDate.getWeekdayName()) + ' ' + headerDate.getDate() + ' ' + Drupal.t(headerDate.getMonthName()));
+              $(dayHeader).clone().insertBefore(this);
+              headersToShow -= 1;
+            } else {
+              dayRowShift += (extraRowPaddingForDate / zoomFactor);
+            }
+
+//            // find out if we need to skip days
+//            var dayDate = new Date(dayCode);
+//            var currentDate = (currentDayCode == "") ? startDate : new Date(currentDayCode);
+//            var dateDiff = 0;
+//            dateDiff = dayDate - currentDate
+//            dateDiff = (dateDiff / (1000 * 60 * 60 * 24)) - 1;
+//            dayRowShift += dateDiff * (scheduleParams.dayLength + (extraRowPaddingForDate / zoomFactor));
+          }
           if (!newRow) { //same row
-            dayRowShift = (scheduleParams.dayLength - dayCredit);
+            dayRowShift += (scheduleParams.dayLength - dayCredit);
           }
           dayCredit = 0;
           currentDayCode = dayCode;

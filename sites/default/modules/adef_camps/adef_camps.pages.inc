@@ -1,11 +1,15 @@
 <?php
 
 function adef_camps_register($node) {
+  $period_date = adef_camps_get_period_date();
+  $days_to_show = $period_date['days_to_show'];
+  drupal_add_js(
+          "var adefCampsDaysToShow = " . $days_to_show . ";\n" . 
+          "var adefCampsStartDate = new Date('" . $period_date['year'] . "-" . $period_date['month'] . "-" . $period_date['day'] . "');",
+          'inline');
   drupal_add_js(drupal_get_path('module', 'adef_camps') . '/js/adef_camps_ui_common.js');
   drupal_add_js(drupal_get_path('module', 'adef_camps') . '/js/adef_camps_registration_interface.js');
-
-  $period_date = adef_camps_get_period_date();
-  $views_date_arg = $period_date['year'] . '-' . $period_date['month'] . '-' . $period_date['day'] . '--P3D'; //--P8D for 2014 only to show all days of camp
+  $views_date_arg = $period_date['year'] . '-' . $period_date['month'] . '-' . $period_date['day'] . '--P'. $days_to_show .'D'; //--P8D for 2014 only to show all days of camp
   $sessions = views_get_view_result('content_blocks', 'block_sessions', $views_date_arg);
   $user_sessions = views_get_view_result('content_blocks', 'block_sessions', $views_date_arg, $node->nid);
   //user_sessrions[i]->nid
