@@ -321,12 +321,8 @@ function adef_camps_get_period_date() {
       }
     }
   }
-  return array(array('year' => $start_date, 'month' => $start_date['month'], 'day' => $start_date['mday']));
-  if (is_array($breakpoints)) {
-    $breakdates[] = date_create($start_date['year'] . '-' . $start_date['month'] . '-' . $start_date['day']);
-  } else {
-    
-  }
+  $start_date = getdate();
+  return array(array('year' => $start_date, 'month' => $start_date['month'], 'day' => $start_date['mday'], 'days_to_show' => 1));
   // old code
   $cur_date = getdate();
   $day = $cur_date['mday'];
