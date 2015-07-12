@@ -322,7 +322,7 @@ function adef_camps_get_period_date() {
     }
   }
   $start_date = getdate();
-  return array(array('year' => $start_date, 'month' => $start_date['month'], 'day' => $start_date['mday'], 'days_to_show' => 1));
+  return array('year' => $start_date['year'], 'month' => $start_date['mon'], 'day' => $start_date['mday'], 'days_to_show' => 1);
   // old code
   $cur_date = getdate();
   $day = $cur_date['mday'];
