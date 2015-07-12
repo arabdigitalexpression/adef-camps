@@ -572,13 +572,6 @@ function adef_camps_roles_user_default_permissions() {
     'module' => 'feeds',
   );
 
-  // Exported permission: 'create badge content'.
-  $permissions['create badge content'] = array(
-    'name' => 'create badge content',
-    'roles' => array(),
-    'module' => 'node',
-  );
-
   // Exported permission: 'create field_date_time'.
   $permissions['create field_date_time'] = array(
     'name' => 'create field_date_time',
@@ -698,13 +691,6 @@ function adef_camps_roles_user_default_permissions() {
     'module' => 'node',
   );
 
-  // Exported permission: 'delete any badge content'.
-  $permissions['delete any badge content'] = array(
-    'name' => 'delete any badge content',
-    'roles' => array(),
-    'module' => 'node',
-  );
-
   // Exported permission: 'delete any participant content'.
   $permissions['delete any participant content'] = array(
     'name' => 'delete any participant content',
@@ -747,13 +733,6 @@ function adef_camps_roles_user_default_permissions() {
     'roles' => array(
       'administrator' => 'administrator',
     ),
-    'module' => 'node',
-  );
-
-  // Exported permission: 'delete own badge content'.
-  $permissions['delete own badge content'] = array(
-    'name' => 'delete own badge content',
-    'roles' => array(),
     'module' => 'node',
   );
 
@@ -861,13 +840,6 @@ function adef_camps_roles_user_default_permissions() {
       'administrator' => 'administrator',
     ),
     'module' => 'taxonomy',
-  );
-
-  // Exported permission: 'edit any badge content'.
-  $permissions['edit any badge content'] = array(
-    'name' => 'edit any badge content',
-    'roles' => array(),
-    'module' => 'node',
   );
 
   // Exported permission: 'edit any participant content'.
@@ -978,13 +950,6 @@ function adef_camps_roles_user_default_permissions() {
       'مدير مستخدمين' => 'مدير مستخدمين',
     ),
     'module' => 'field_permissions',
-  );
-
-  // Exported permission: 'edit own badge content'.
-  $permissions['edit own badge content'] = array(
-    'name' => 'edit own badge content',
-    'roles' => array(),
-    'module' => 'node',
   );
 
   // Exported permission: 'edit own field_date_time'.
