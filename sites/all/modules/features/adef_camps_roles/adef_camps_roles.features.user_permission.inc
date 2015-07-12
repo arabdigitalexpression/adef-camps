@@ -630,6 +630,16 @@ function adef_camps_roles_user_default_permissions() {
     'module' => 'field_permissions',
   );
 
+  // Exported permission: 'create field_related_user'.
+  $permissions['create field_related_user'] = array(
+    'name' => 'create field_related_user',
+    'roles' => array(
+      'administrator' => 'administrator',
+      'مدير مستخدمين' => 'مدير مستخدمين',
+    ),
+    'module' => 'field_permissions',
+  );
+
   // Exported permission: 'create participant content'.
   $permissions['create participant content'] = array(
     'name' => 'create participant content',
@@ -952,6 +962,16 @@ function adef_camps_roles_user_default_permissions() {
     'module' => 'field_permissions',
   );
 
+  // Exported permission: 'edit field_related_user'.
+  $permissions['edit field_related_user'] = array(
+    'name' => 'edit field_related_user',
+    'roles' => array(
+      'administrator' => 'administrator',
+      'مدير مستخدمين' => 'مدير مستخدمين',
+    ),
+    'module' => 'field_permissions',
+  );
+
   // Exported permission: 'edit own field_date_time'.
   $permissions['edit own field_date_time'] = array(
     'name' => 'edit own field_date_time',
@@ -1003,6 +1023,16 @@ function adef_camps_roles_user_default_permissions() {
     'name' => 'edit own field_related_particpant_profile',
     'roles' => array(
       'administrator' => 'administrator',
+    ),
+    'module' => 'field_permissions',
+  );
+
+  // Exported permission: 'edit own field_related_user'.
+  $permissions['edit own field_related_user'] = array(
+    'name' => 'edit own field_related_user',
+    'roles' => array(
+      'administrator' => 'administrator',
+      'مدير مستخدمين' => 'مدير مستخدمين',
     ),
     'module' => 'field_permissions',
   );
@@ -1451,6 +1481,18 @@ function adef_camps_roles_user_default_permissions() {
     'module' => 'field_permissions',
   );
 
+  // Exported permission: 'view field_related_user'.
+  $permissions['view field_related_user'] = array(
+    'name' => 'view field_related_user',
+    'roles' => array(
+      'administrator' => 'administrator',
+      'authenticated user' => 'authenticated user',
+      'مدير مستخدمين' => 'مدير مستخدمين',
+      'مشارك' => 'مشارك',
+    ),
+    'module' => 'field_permissions',
+  );
+
   // Exported permission: 'view own field_date_time'.
   $permissions['view own field_date_time'] = array(
     'name' => 'view own field_date_time',
@@ -1503,6 +1545,18 @@ function adef_camps_roles_user_default_permissions() {
     'name' => 'view own field_related_particpant_profile',
     'roles' => array(
       'administrator' => 'administrator',
+    ),
+    'module' => 'field_permissions',
+  );
+
+  // Exported permission: 'view own field_related_user'.
+  $permissions['view own field_related_user'] = array(
+    'name' => 'view own field_related_user',
+    'roles' => array(
+      'administrator' => 'administrator',
+      'authenticated user' => 'authenticated user',
+      'مدير مستخدمين' => 'مدير مستخدمين',
+      'مشارك' => 'مشارك',
     ),
     'module' => 'field_permissions',
   );
