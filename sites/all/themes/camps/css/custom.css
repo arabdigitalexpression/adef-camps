@@ -48,6 +48,7 @@ h4 {
   float: left;
   padding: 10px 5px 10px 0;
   border-top: 1px solid #1c9cd4;
+  position: relative;
 }
 
 #available-sessions .session {
@@ -142,6 +143,7 @@ ul.grid li.small img {
   padding: 0.5em;
   color: #000;
   opacity: 1 !important;
+  z-index: 99;
 }
 
 .printed-schedule .view-grouping-header {
