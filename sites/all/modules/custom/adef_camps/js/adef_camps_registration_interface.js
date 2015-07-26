@@ -94,9 +94,9 @@
     var selected = new Array();
     $('.session.selected').each(function (pos, session) {
       cssclasses = $(session).prop('class').split(' ');
+      zkid = '';
       for (i = 0; i < cssclasses.length; i++) {
-        zkid = '';
-        if (cssclasses[i].substr(0, 11) == 'zkid') {
+        if (cssclasses[i].substr(0, 4) == 'zkid') {
           zkid = cssclasses[i].replace('zkid-', '');
         }
       }
