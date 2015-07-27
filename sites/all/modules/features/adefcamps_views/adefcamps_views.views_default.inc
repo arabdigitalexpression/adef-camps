@@ -2394,6 +2394,111 @@ return $period_date[\'year\'] . \'-\' . $period_date[\'month\'] . \'-\' . $perio
   $handler->display->display_options['arguments']['nid']['summary']['number_of_records'] = '0';
   $handler->display->display_options['arguments']['nid']['summary']['format'] = 'default_summary';
   $handler->display->display_options['arguments']['nid']['summary_options']['items_per_page'] = '25';
+
+  /* Display: Timespace for sessions */
+  $handler = $view->new_display('entityreference', 'Timespace for sessions', 'entityreference_timespace');
+  $handler->display->display_options['defaults']['title'] = FALSE;
+  $handler->display->display_options['pager']['type'] = 'none';
+  $handler->display->display_options['pager']['options']['offset'] = '0';
+  $handler->display->display_options['defaults']['style_plugin'] = FALSE;
+  $handler->display->display_options['style_plugin'] = 'entityreference_style';
+  $handler->display->display_options['style_options']['search_fields'] = array(
+    'field_date_time' => 'field_date_time',
+    'field_location' => 0,
+    'field_session' => 0,
+  );
+  $handler->display->display_options['defaults']['style_options'] = FALSE;
+  $handler->display->display_options['defaults']['row_plugin'] = FALSE;
+  $handler->display->display_options['row_plugin'] = 'entityreference_fields';
+  $handler->display->display_options['row_options']['inline'] = array(
+    'field_location' => 'field_location',
+    'field_date_time' => 'field_date_time',
+  );
+  $handler->display->display_options['defaults']['row_options'] = FALSE;
+  $handler->display->display_options['defaults']['relationships'] = FALSE;
+  /* Relationship: Content: مكان (field_location) */
+  $handler->display->display_options['relationships']['field_location_tid']['id'] = 'field_location_tid';
+  $handler->display->display_options['relationships']['field_location_tid']['table'] = 'field_data_field_location';
+  $handler->display->display_options['relationships']['field_location_tid']['field'] = 'field_location_tid';
+  $handler->display->display_options['defaults']['fields'] = FALSE;
+  /* Field: Content: مكان */
+  $handler->display->display_options['fields']['field_location']['id'] = 'field_location';
+  $handler->display->display_options['fields']['field_location']['table'] = 'field_data_field_location';
+  $handler->display->display_options['fields']['field_location']['field'] = 'field_location';
+  $handler->display->display_options['fields']['field_location']['label'] = '';
+  $handler->display->display_options['fields']['field_location']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['field_location']['type'] = 'taxonomy_term_reference_plain';
+  /* Field: Content: زمان */
+  $handler->display->display_options['fields']['field_date_time']['id'] = 'field_date_time';
+  $handler->display->display_options['fields']['field_date_time']['table'] = 'field_data_field_date_time';
+  $handler->display->display_options['fields']['field_date_time']['field'] = 'field_date_time';
+  $handler->display->display_options['fields']['field_date_time']['label'] = '';
+  $handler->display->display_options['fields']['field_date_time']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['field_date_time']['settings'] = array(
+    'format_type' => 'long',
+    'fromto' => 'both',
+    'multiple_number' => '',
+    'multiple_from' => '',
+    'multiple_to' => '',
+    'show_remaining_days' => 0,
+  );
+  /* Field: Content: جلسة */
+  $handler->display->display_options['fields']['field_session']['id'] = 'field_session';
+  $handler->display->display_options['fields']['field_session']['table'] = 'field_data_field_session';
+  $handler->display->display_options['fields']['field_session']['field'] = 'field_session';
+  $handler->display->display_options['fields']['field_session']['label'] = '';
+  $handler->display->display_options['fields']['field_session']['exclude'] = TRUE;
+  $handler->display->display_options['fields']['field_session']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['field_session']['type'] = 'entityreference_entity_id';
+  $handler->display->display_options['fields']['field_session']['settings'] = array(
+    'link' => 0,
+  );
+  /* Field: diplay_title */
+  $handler->display->display_options['fields']['nothing']['id'] = 'nothing';
+  $handler->display->display_options['fields']['nothing']['table'] = 'views';
+  $handler->display->display_options['fields']['nothing']['field'] = 'nothing';
+  $handler->display->display_options['fields']['nothing']['ui_name'] = 'diplay_title';
+  $handler->display->display_options['fields']['nothing']['label'] = '';
+  $handler->display->display_options['fields']['nothing']['alter']['text'] = '[field_location] - [field_date_time]';
+  $handler->display->display_options['fields']['nothing']['element_label_colon'] = FALSE;
+  $handler->display->display_options['defaults']['sorts'] = FALSE;
+  /* Sort criterion: Content: مكان (field_location) */
+  $handler->display->display_options['sorts']['field_location_tid']['id'] = 'field_location_tid';
+  $handler->display->display_options['sorts']['field_location_tid']['table'] = 'field_data_field_location';
+  $handler->display->display_options['sorts']['field_location_tid']['field'] = 'field_location_tid';
+  /* Sort criterion: Content: زمان (field_date_time) */
+  $handler->display->display_options['sorts']['field_date_time_value']['id'] = 'field_date_time_value';
+  $handler->display->display_options['sorts']['field_date_time_value']['table'] = 'field_data_field_date_time';
+  $handler->display->display_options['sorts']['field_date_time_value']['field'] = 'field_date_time_value';
+  $handler->display->display_options['defaults']['arguments'] = FALSE;
+  /* Contextual filter: Content: زمان (field_date_time) */
+  $handler->display->display_options['arguments']['field_date_time_value']['id'] = 'field_date_time_value';
+  $handler->display->display_options['arguments']['field_date_time_value']['table'] = 'field_data_field_date_time';
+  $handler->display->display_options['arguments']['field_date_time_value']['field'] = 'field_date_time_value';
+  $handler->display->display_options['arguments']['field_date_time_value']['default_action'] = 'default';
+  $handler->display->display_options['arguments']['field_date_time_value']['default_argument_type'] = 'date';
+  $handler->display->display_options['arguments']['field_date_time_value']['summary']['number_of_records'] = '0';
+  $handler->display->display_options['arguments']['field_date_time_value']['summary']['format'] = 'default_summary';
+  $handler->display->display_options['arguments']['field_date_time_value']['summary_options']['items_per_page'] = '25';
+  $handler->display->display_options['arguments']['field_date_time_value']['granularity'] = 'day';
+  $handler->display->display_options['arguments']['field_date_time_value']['granularity_reset'] = 0;
+  $handler->display->display_options['arguments']['field_date_time_value']['use_fromto'] = 'no';
+  $handler->display->display_options['defaults']['filter_groups'] = FALSE;
+  $handler->display->display_options['defaults']['filters'] = FALSE;
+  /* Filter criterion: Content: Published */
+  $handler->display->display_options['filters']['status']['id'] = 'status';
+  $handler->display->display_options['filters']['status']['table'] = 'node';
+  $handler->display->display_options['filters']['status']['field'] = 'status';
+  $handler->display->display_options['filters']['status']['value'] = 1;
+  $handler->display->display_options['filters']['status']['group'] = 1;
+  $handler->display->display_options['filters']['status']['expose']['operator'] = FALSE;
+  /* Filter criterion: Content: Type */
+  $handler->display->display_options['filters']['type']['id'] = 'type';
+  $handler->display->display_options['filters']['type']['table'] = 'node';
+  $handler->display->display_options['filters']['type']['field'] = 'type';
+  $handler->display->display_options['filters']['type']['value'] = array(
+    'timespace' => 'timespace',
+  );
   $translatables['content_reference'] = array(
     t('Master'),
     t('more'),
@@ -2414,6 +2519,9 @@ return $period_date[\'year\'] . \'-\' . $period_date[\'month\'] . \'-\' . $perio
     t('Entity Reference'),
     t('Atendees'),
     t('Content referencing Content from field_participants'),
+    t('Timespace for sessions'),
+    t('term from field_location'),
+    t('[field_location] - [field_date_time]'),
   );
   $export['content_reference'] = $view;
 

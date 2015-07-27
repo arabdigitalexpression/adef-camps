@@ -133,8 +133,8 @@ function adef_camps_views_pre_render(&$view) {
  */
 function adef_camps_views_api() {
   return array(
-    'api' => 3,
-    'template path' => drupal_get_path('module', 'adef_camps') . '/templates',
+      'api' => 3,
+      'template path' => drupal_get_path('module', 'adef_camps') . '/templates',
   );
 }
 
@@ -302,7 +302,7 @@ function adef_camps_get_period_date() {
   $hours_to_switch_hour = 24 - $switch_hour;
   $start_date = variable_get('adef_camps_start_date', array('year' => 2013, 'month' => 8, 'day' => 16));
   $start_date = date_create($start_date['year'] . '-' . $start_date['month'] . '-' . $start_date['day']);
-  $start_date->sub(new DateInterval('PT'. $hours_to_switch_hour . 'H'));
+  $start_date->sub(new DateInterval('PT' . $hours_to_switch_hour . 'H'));
   $breakpoints = variable_get('adef_camps_daybreakpoints', '2');
   $breakpoints = explode(',', $breakpoints);
   $end_date = new DateTime;
@@ -311,10 +311,10 @@ function adef_camps_get_period_date() {
   } else {
     for ($i = 1; $i < (count($breakpoints)); $i++) {
       $bp = $breakpoints[$i];
-      $start_date->add(new DateInterval('P'. $breakpoints[$i-1] .'D'));
+      $start_date->add(new DateInterval('P' . $breakpoints[$i - 1] . 'D'));
       $end_date->setTimestamp($start_date->getTimeStamp() + (24 * 60 * 60 * $bp));
       if ($cur_date >= $start_date && $cur_date < $end_date) {
-        $start_date->add(new DateInterval('PT'. $hours_to_switch_hour . 'H'));
+        $start_date->add(new DateInterval('PT' . $hours_to_switch_hour . 'H'));
         $start_date = getdate($start_date->getTimeStamp());
         $days_to_show = $breakpoints[$i];
         return array('year' => $start_date['year'], 'month' => $start_date['mon'], 'day' => $start_date['mday'], 'days_to_show' => $days_to_show);
@@ -344,6 +344,62 @@ function adef_camps_get_period_date() {
     $start_date['day'] += 1;
   }
   return $start_date;
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter();
+ */
+function adef_camps_form_session_node_form_alter(&$form, &$form_state, $form_id) {
+  $start_date = variable_get('adef_camps_start_date', array('year' => 2013, 'month' => 8, 'day' => 16));
+  $breakpoints = explode(",", variable_get('adef_camps_daybreakpoints', '2'));
+  $length = array_sum($breakpoints);
+  $views_date_arg = $start_date['year'] . '-' . $start_date['month'] . '-' . $start_date['day'] . '--P' . $length . 'D';
+  $sessions = views_get_view_result('content_reference', 'entityreference_timespace', $views_date_arg);
+  $session_selection = array();
+  $selected = array();
+  foreach ($sessions as $session) {
+    $assign = FALSE;
+    if (count($session->field_field_session) == 0) {
+      $assign = TRUE;
+    } else if ($session->field_field_session[0]['raw']['target_id'] == $form_state['node']->nid) {
+      $selected[] = $session->nid;
+      $assign = TRUE;
+    }
+    if ($assign) {
+      $session_selection[$session->nid] = $session->field_field_location[0]['rendered']['#markup'] . " - " . format_date(strtotime($session->field_data_field_date_time_field_date_time_value), "long");
+    }
+  }
+  $form['timeslots'] = array(
+      '#type' => 'select',
+      '#title' => t('Time-spaces'),
+      '#options' => $session_selection,
+      '#multiple' => TRUE,
+      '#size' => 10,
+      '#default_value' => $selected,
+      '#description' => t('Select the time-space slots reserved for this session. ctrl+click to select more than one.'),
+  );
+  $form['selected_timeslots'] = array(
+      '#type' => 'hidden',
+      '#value' => implode(",", $selected),
+  );
+}
+
+function adef_camps_node_submit($node, $form, &$form_state) {
+  drupal_set_message("hey");
+  if ($node->type == 'session' && $form_state['clicked_button']['#id'] == 'edit-submit') {
+    $spacestime = $form_state['values']['timeslots'];
+    $selected = explode(",", $form_state['values']['selected_timeslots']);
+    foreach ($selected as $slot) {
+      $slot_node = node_load($slot);
+      unset($slot_node->field_session[LANGUAGE_NONE][0]);
+      node_save($slot_node);
+    }
+    foreach ($spacestime as $slot) {
+      $slot_node = node_load($slot);
+      $slot_node->field_session[LANGUAGE_NONE][0]['target_id'] = $node->nid;
+      node_save($slot_node);
+    }
+  }
 }
 
 /**
