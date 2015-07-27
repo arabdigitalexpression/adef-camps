@@ -385,7 +385,6 @@ function adef_camps_form_session_node_form_alter(&$form, &$form_state, $form_id)
 }
 
 function adef_camps_node_submit($node, $form, &$form_state) {
-  drupal_set_message("hey");
   if ($node->type == 'session' && $form_state['clicked_button']['#id'] == 'edit-submit') {
     $spacestime = $form_state['values']['timeslots'];
     $selected = explode(",", $form_state['values']['selected_timeslots']);
@@ -396,7 +395,11 @@ function adef_camps_node_submit($node, $form, &$form_state) {
     }
     foreach ($spacestime as $slot) {
       $slot_node = node_load($slot);
-      $slot_node->field_session[LANGUAGE_NONE][0]['target_id'] = $node->nid;
+      if (count($slot_node->field_session > 0) && $slot_node->field_session[LANGUAGE_NONE][0]['target_id'] != $node->nid) {
+        drupal_set(t('Unable to assign some time slots to this session. Please review your choices'), 'error');
+      } else {
+        $slot_node->field_session[LANGUAGE_NONE][0]['target_id'] = $node->nid;
+      }
       node_save($slot_node);
     }
   }
