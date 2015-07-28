@@ -1,4 +1,4 @@
-(function ($) {
+(function ($, Drupal) {
   Date.prototype.getMonthName = function () {
     month_names = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
     return month_names[this.getMonth()];
@@ -137,4 +137,4 @@
     return mins;
   };
 
-}(jQuery));
+}(jQuery, Drupal));

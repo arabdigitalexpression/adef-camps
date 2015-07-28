@@ -1,4 +1,4 @@
-(function ($) {
+(function ($, Drupal) {
   var timer;
   timer = setInterval(getSlots, 10000);
   getSlots();
@@ -106,7 +106,7 @@
   }
 
   function getSlots() {
-    var url = '/?q=adefcamps/registration/slots';
+    var url = Drupal.settings.basePath + '?q=adefcamps/registration/slots';
     $.getJSON(url, function (json) {
       $.each(json, function (key, val) {
         if (val > 0) {
@@ -118,4 +118,4 @@
       });
     });
   }
-}(jQuery));
+}(jQuery, Drupal));
