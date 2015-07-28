@@ -275,6 +275,7 @@ function adefcamps_views_views_default_views() {
   $handler->display->display_options['fields']['field_duration']['field'] = 'field_duration';
   $handler->display->display_options['fields']['field_duration']['relationship'] = 'field_session_target_id';
   $handler->display->display_options['fields']['field_duration']['label'] = '';
+  $handler->display->display_options['fields']['field_duration']['exclude'] = TRUE;
   $handler->display->display_options['fields']['field_duration']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['field_duration']['type'] = 'number_unformatted';
   $handler->display->display_options['fields']['field_duration']['settings'] = array(
