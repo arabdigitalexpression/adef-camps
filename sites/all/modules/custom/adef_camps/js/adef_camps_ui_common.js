@@ -33,7 +33,7 @@
       var fullWidthWithHeader = (scheduleParams.dayLength * daysToShow * zoomFactor) + $(sessions).first().width() + (daysToShow * extraRowPaddingForDate);
       $(container).parent().outerWidth(fullWidthWithHeader);
     }
-    $(container).parent().css('padding-bottom','150px');
+    $(container).parent().css('padding-bottom','200px');
 
     $(sessions).each(function () {
       if ($(this).prop('tagName') == 'H3') {
