@@ -159,3 +159,4 @@ features[variable][] = node_submitted_register_entry
 features[variable][] = node_submitted_session
 features[variable][] = node_submitted_timespace
 features[variable][] = node_submitted_workshop
+features[variable][] = page_manager_node_view_disabled
