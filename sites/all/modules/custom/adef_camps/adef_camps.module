@@ -387,16 +387,16 @@ function adef_camps_form_session_node_form_alter(&$form, &$form_state, $form_id)
 function adef_camps_node_submit($node, $form, &$form_state) {
   if ($node->type == 'session' && $form_state['clicked_button']['#id'] == 'edit-submit') {
     $spacestime = $form_state['values']['timeslots'];
-    $selected = explode(",", $form_state['values']['selected_timeslots']);
+    $selected = !empty($form_state['values']['selected_timeslots']) ? explode(",", $form_state['values']['selected_timeslots']) : array();
     foreach ($selected as $slot) {
       $slot_node = node_load($slot);
-      unset($slot_node->field_session[LANGUAGE_NONE][0]);
+      unset($slot_node->field_session);
       node_save($slot_node);
     }
     foreach ($spacestime as $slot) {
       $slot_node = node_load($slot);
-      if (count($slot_node->field_session > 0) && $slot_node->field_session[LANGUAGE_NONE][0]['target_id'] != $node->nid) {
-        drupal_set(t('Unable to assign some time slots to this session. Please review your choices'), 'error');
+      if (count($slot_node->field_session) > 0 && $slot_node->field_session[LANGUAGE_NONE][0]['target_id'] != $node->nid) {
+        drupal_set_message(t('Unable to assign some time slots to this session. Please review your choices'), 'error');
       } else {
         $slot_node->field_session[LANGUAGE_NONE][0]['target_id'] = $node->nid;
       }
