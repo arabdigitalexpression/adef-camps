@@ -47,6 +47,14 @@
       }
       updateSelected();
     }); //finished prepare sessions interaction
+    
+    //validate no required sessions
+    $('#adef-camps-registration-form').submit(function () {
+      if ($('.session.required').length != 0) {
+        alert(Drupal.t("Please review your selection. There are required sessions that you did not register for."));
+        return false;
+      }
+    });
 
     //deal with selected sessions
     selected = $('input[name=timespace]').val();
