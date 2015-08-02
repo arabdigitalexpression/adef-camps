@@ -20,6 +20,11 @@ function adef_camps_configure_form($form, &$form_state) {
       '#description' => t('Session registartion takes place at every breakpoint showing number of days until next breakpoint. Separate breakpoints by comma. If you enter one breakpoint only it will apply uniformly to the camp. Example: "2,4,3,2" will show 4 days from day 2, 3 days from day 4, and 2 days from day 3 (assuming they are the last 2 days). "3" will show 3 days to register every 3 days.'),
       '#default_value' => strval(variable_get('adef_camps_daybreakpoints', '2')),
   );
+  $form['ignore_full_workshop'] = array(
+      '#type' => 'checkbox',
+      '#title' => t('Allow sessions of any workshop to be registered regardless of other sessions in the same workshop.'),
+      '#default_value' => variable_get('adef_camps_ignore_full_workshop', FALSE),
+  );
   $form['switch_hour'] = array(
       '#type' => 'textfield',
       '#title' => t('Switch hour'),
@@ -85,7 +90,7 @@ function adef_camps_generate_slots_form($form, &$form_state) {
   $form['hours'] = array(
       '#weight' => '2',
       '#required' => '0',
-      '#description' => t('Type starting hours in 24hr format separated by commas. For example: 10,12,15,17 for 10:00am, 12:00p, 03:00pm, 05:00pm.'),
+      '#description' => t('Type starting hours in 24hr format with decimals or minutes separated by commas. For example: 10,12:30,15.25,17 for 10:00am, 12:30p, 03:15pm, 05:00pm.'),
       '#type' => 'textfield',
       '#title' => t('Start Hours'),
   );
@@ -110,7 +115,18 @@ function adef_camps_generate_slots_form_validate($form, &$form_state) {
 
 function adef_camps_generate_slots_form_submit($form, &$form_state) {
   $hours = explode(",", $form_state['values']['hours']);
-  //@TODO: Validate hours values
+  //validate hours
+  foreach ($hours as $pos => $hour) {
+    if (!is_numeric($hour) && strlen($hour) == 5) {
+      if (strpos($hour, ":") == 2) {
+        $hours[$pos] = intval(substr($hour, 0, 2)) + (intval(substr($hour, 3, 2)) / 60);
+      } else {
+        unset($hours[$pos]);
+      }
+    } else {
+      unset($hours[$pos]);
+    }
+  }
   $date_from = $form_state['values']['date_from']['year'] . "-" . $form_state['values']['date_from']['month'] . "-" . $form_state['values']['date_from']['day'];
   $date_to = $form_state['values']['date_to']['year'] . "-" . $form_state['values']['date_to']['month'] . "-" . $form_state['values']['date_to']['day'];
   $diff = date_diff(new DateTime($date_from), new DateTime($date_to), TRUE);
@@ -125,20 +141,22 @@ function adef_camps_generate_slots_form_submit($form, &$form_state) {
         $curdate = strtotime($date_from);
         $curdate += $i * 60 * 60 * 24;
         foreach ($hours as $hour) {
-          $slot_start = date('Y-m-d H:i', $curdate + ($hour * 60 * 60));
-          //Create the node and save it
-          $node = new stdClass();
-          $node->type = "timespace";
-          node_object_prepare($node); // Sets some defaults. Invokes hook_prepare() and hook_node_prepare().
-          $node->language = LANGUAGE_NONE; // Or e.g. 'en' if locale is enabled
-          $node->uid = $user->uid;
-          $node->status = 1; //(1 or 0): published or not
-          $node->promote = 0; //(1 or 0): promoted to front page
-          // Term reference (taxonomy) field
-          $node->field_location[$node->language][]['tid'] = $tid;
-          $node->field_date_time[$node->language][]['value'] = $slot_start; 
-          $node = node_submit($node); // Prepare node for saving
-          node_save($node);
+          if (is_numeric($hour)) {
+            $slot_start = date('Y-m-d H:i', $curdate + ($hour * 60 * 60));
+            //Create the node and save it
+            $node = new stdClass();
+            $node->type = "timespace";
+            node_object_prepare($node); // Sets some defaults. Invokes hook_prepare() and hook_node_prepare().
+            $node->language = LANGUAGE_NONE; // Or e.g. 'en' if locale is enabled
+            $node->uid = $user->uid;
+            $node->status = 1; //(1 or 0): published or not
+            $node->promote = 0; //(1 or 0): promoted to front page
+            // Term reference (taxonomy) field
+            $node->field_location[$node->language][]['tid'] = $tid;
+            $node->field_date_time[$node->language][]['value'] = $slot_start;
+            $node = node_submit($node); // Prepare node for saving
+            node_save($node);
+          }
         }
       }
     }
