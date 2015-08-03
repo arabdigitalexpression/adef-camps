@@ -50,7 +50,7 @@
     
     //validate no required sessions
     $('#adef-camps-registration-form').submit(function () {
-      if ($('.session.required').length != 0) {
+      if ($('.session.required').length != 0 && !Drupal.settings.adef_camps.ignoreFullWorkshop) {
         alert(Drupal.t("Please review your selection. There are required sessions that you did not register for."));
         return false;
       }

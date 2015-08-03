@@ -43,6 +43,7 @@ function adef_camps_configure_form_submit($form, &$form_state) {
   variable_set('adef_camps_start_date', $form_state['values']['start_date']);
   variable_set('adef_camps_switch_hour', intval($form_state['values']['switch_hour']));
   variable_set('adef_camps_daybreakpoints', $form_state['values']['day_breakpoints']);
+  variable_set('adef_camps_ignore_full_workshop', $form_state['values']['ignore_full_workshop']);
   drupal_set_message(t('Configuration was saved.'));
 }
 

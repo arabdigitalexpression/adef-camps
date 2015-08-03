@@ -7,6 +7,12 @@ function adef_camps_register($node) {
           "var adefCampsDaysToShow = " . $days_to_show . ";\n" . 
           "var adefCampsStartDate = new Date('" . $period_date['year'] . "-" . $period_date['month'] . "-" . $period_date['day'] . "');",
           'inline');
+  drupal_add_js(array(
+      'adef_camps' => array(
+          'ignoreFullWorkshop' => variable_get('adef_camps_ignore_full_workshop', FALSE)
+          ),
+      ),
+          'setting');
   drupal_add_js(drupal_get_path('module', 'adef_camps') . '/js/adef_camps_ui_common.js');
   drupal_add_js(drupal_get_path('module', 'adef_camps') . '/js/adef_camps_registration_interface.js');
   $views_date_arg = $period_date['year'] . '-' . $period_date['month'] . '-' . $period_date['day'] . '--P'. $days_to_show .'D'; //--P8D for 2014 only to show all days of camp
