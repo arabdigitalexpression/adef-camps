@@ -534,11 +534,11 @@ function adefcamps_views_views_default_views() {
     'show_remaining_days' => 0,
   );
   $handler->display->display_options['defaults']['sorts'] = FALSE;
-  /* Sort criterion: Taxonomy term: Term ID */
-  $handler->display->display_options['sorts']['tid']['id'] = 'tid';
-  $handler->display->display_options['sorts']['tid']['table'] = 'taxonomy_term_data';
-  $handler->display->display_options['sorts']['tid']['field'] = 'tid';
-  $handler->display->display_options['sorts']['tid']['relationship'] = 'field_location_tid';
+  /* Sort criterion: Taxonomy term: Weight */
+  $handler->display->display_options['sorts']['weight']['id'] = 'weight';
+  $handler->display->display_options['sorts']['weight']['table'] = 'taxonomy_term_data';
+  $handler->display->display_options['sorts']['weight']['field'] = 'weight';
+  $handler->display->display_options['sorts']['weight']['relationship'] = 'field_location_tid';
   /* Sort criterion: Content: زمان (field_date_time) */
   $handler->display->display_options['sorts']['field_date_time_value']['id'] = 'field_date_time_value';
   $handler->display->display_options['sorts']['field_date_time_value']['table'] = 'field_data_field_date_time';
