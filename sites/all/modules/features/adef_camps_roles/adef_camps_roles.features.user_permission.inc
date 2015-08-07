@@ -1042,6 +1042,7 @@ function adef_camps_roles_user_default_permissions() {
     'name' => 'edit own participant content',
     'roles' => array(
       'administrator' => 'administrator',
+      'مشارك' => 'مشارك',
     ),
     'module' => 'node',
   );

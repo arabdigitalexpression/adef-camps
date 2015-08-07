@@ -195,6 +195,19 @@ function adef_camps_node_update($node) {
 }
 
 /**
+ * Implements hook_node_presave();
+ */
+function adef_camps_node_presave($node) {
+  switch ($node->type) {
+    case "participant":
+      if (!empty($node->field_related_user[LANGUAGE_NONE])) {
+        $node->uid = $node->field_related_user[LANGUAGE_NONE][0]['target_id'];
+      }
+      break;
+  }
+}
+
+/**
  * Implements hook_node_insert();
  */
 function adef_camps_node_insert($node) {
