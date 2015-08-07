@@ -162,7 +162,7 @@ function content_types_field_default_field_instances() {
     'entity_type' => 'node',
     'field_name' => 'field_gender',
     'label' => 'الجنس',
-    'required' => 1,
+    'required' => 0,
     'settings' => array(
       'user_register_form' => FALSE,
     ),
@@ -361,7 +361,7 @@ function content_types_field_default_field_instances() {
     'required' => 0,
     'settings' => array(
       'alt_field' => 0,
-      'default_image' => 7,
+      'default_image' => 0,
       'file_directory' => 'images/participants',
       'file_extensions' => 'png gif jpg jpeg',
       'max_filesize' => '',
