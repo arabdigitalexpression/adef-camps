@@ -124,7 +124,7 @@ function adef_camps_generate_slots_form_submit($form, &$form_state) {
       } else {
         unset($hours[$pos]);
       }
-    } else {
+    } elseif (!is_numeric($hour)) {
       unset($hours[$pos]);
     }
   }
