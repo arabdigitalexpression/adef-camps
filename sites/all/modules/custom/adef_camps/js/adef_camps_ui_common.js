@@ -33,7 +33,7 @@
       var fullWidthWithHeader = (scheduleParams.dayLength * daysToShow * zoomFactor) + $(sessions).first().width() + (daysToShow * extraRowPaddingForDate);
       $(container).parent().outerWidth(fullWidthWithHeader);
     }
-    $(container).parent().css('padding-bottom','200px');
+    $(container).parent().css('padding-bottom', '200px');
 
     $(sessions).each(function () {
       if ($(this).prop('tagName') == 'H3') {
@@ -137,5 +137,16 @@
     var mins = (parseInt(timeString.substr(0, 2)) * 60) + parseInt(timeString.substr(2, 2));
     return mins;
   };
+
+  $().ready(function () {
+    $('.tooltip').hide();
+    $('.session').mouseover(function (){
+      if (!$(this).hasClass('disabled')) {
+        $(this).children('.tooltip').show().children().show();
+      }
+    }).mouseleave(function () {
+      $(this).children('.tooltip').hide();
+    });
+  });
 
 }(jQuery, Drupal));
