@@ -9,22 +9,6 @@
  */
 function content_types_taxonomy_default_vocabularies() {
   return array(
-    'educational_goals' => array(
-      'name' => 'الأهداف التربوية',
-      'machine_name' => 'educational_goals',
-      'description' => '',
-      'hierarchy' => 0,
-      'module' => 'taxonomy',
-      'weight' => 0,
-    ),
-    'fields' => array(
-      'name' => 'مجالات',
-      'machine_name' => 'fields',
-      'description' => '',
-      'hierarchy' => 0,
-      'module' => 'taxonomy',
-      'weight' => 0,
-    ),
     'location_description' => array(
       'name' => 'أوصاف الأماكن',
       'machine_name' => 'location_description',

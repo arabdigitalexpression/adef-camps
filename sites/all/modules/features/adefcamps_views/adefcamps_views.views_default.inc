@@ -65,7 +65,7 @@ function adefcamps_views_views_default_views() {
       'rendered_strip' => 0,
     ),
   );
-  $handler->display->display_options['style_options']['row_class'] = 'session id-[nid_1] w-[nid] tc-[field_date_time_1][field_date_time] zkid-[nid_2] color-[field_color]';
+  $handler->display->display_options['style_options']['row_class'] = 'session id-[nid_1] w-[nid] tc-[field_date_time_1][field_date_time] zkid-[nid_2]';
   $handler->display->display_options['style_options']['default_row_class'] = FALSE;
   $handler->display->display_options['style_options']['row_class_special'] = FALSE;
   $handler->display->display_options['defaults']['style_options'] = FALSE;
@@ -162,53 +162,6 @@ function adefcamps_views_views_default_views() {
   $handler->display->display_options['fields']['nid_1']['label'] = '';
   $handler->display->display_options['fields']['nid_1']['exclude'] = TRUE;
   $handler->display->display_options['fields']['nid_1']['element_label_colon'] = FALSE;
-  /* Field: Content: Title */
-  $handler->display->display_options['fields']['title']['id'] = 'title';
-  $handler->display->display_options['fields']['title']['table'] = 'node';
-  $handler->display->display_options['fields']['title']['field'] = 'title';
-  $handler->display->display_options['fields']['title']['relationship'] = 'field_session_target_id';
-  $handler->display->display_options['fields']['title']['label'] = '';
-  $handler->display->display_options['fields']['title']['alter']['word_boundary'] = FALSE;
-  $handler->display->display_options['fields']['title']['alter']['ellipsis'] = FALSE;
-  $handler->display->display_options['fields']['title']['element_label_colon'] = FALSE;
-  $handler->display->display_options['fields']['title']['link_to_node'] = FALSE;
-  /* Field: Taxonomy term: اللون */
-  $handler->display->display_options['fields']['field_color_1']['id'] = 'field_color_1';
-  $handler->display->display_options['fields']['field_color_1']['table'] = 'field_data_field_color';
-  $handler->display->display_options['fields']['field_color_1']['field'] = 'field_color';
-  $handler->display->display_options['fields']['field_color_1']['relationship'] = 'term_node_tid';
-  $handler->display->display_options['fields']['field_color_1']['label'] = '';
-  $handler->display->display_options['fields']['field_color_1']['element_label_colon'] = FALSE;
-  $handler->display->display_options['fields']['field_color_1']['settings'] = array(
-    'width' => '16',
-    'height' => '16',
-  );
-  /* Field: Content: Title */
-  $handler->display->display_options['fields']['title_1']['id'] = 'title_1';
-  $handler->display->display_options['fields']['title_1']['table'] = 'node';
-  $handler->display->display_options['fields']['title_1']['field'] = 'title';
-  $handler->display->display_options['fields']['title_1']['relationship'] = 'field_workshop_target_id';
-  $handler->display->display_options['fields']['title_1']['label'] = '';
-  $handler->display->display_options['fields']['title_1']['exclude'] = TRUE;
-  $handler->display->display_options['fields']['title_1']['element_label_colon'] = FALSE;
-  $handler->display->display_options['fields']['title_1']['link_to_node'] = FALSE;
-  /* Field: workshop-max */
-  $handler->display->display_options['fields']['field_max_participants']['id'] = 'field_max_participants';
-  $handler->display->display_options['fields']['field_max_participants']['table'] = 'field_data_field_max_participants';
-  $handler->display->display_options['fields']['field_max_participants']['field'] = 'field_max_participants';
-  $handler->display->display_options['fields']['field_max_participants']['relationship'] = 'field_workshop_target_id';
-  $handler->display->display_options['fields']['field_max_participants']['ui_name'] = 'workshop-max';
-  $handler->display->display_options['fields']['field_max_participants']['label'] = '';
-  $handler->display->display_options['fields']['field_max_participants']['exclude'] = TRUE;
-  $handler->display->display_options['fields']['field_max_participants']['element_label_colon'] = FALSE;
-  $handler->display->display_options['fields']['field_max_participants']['empty'] = '0';
-  $handler->display->display_options['fields']['field_max_participants']['empty_zero'] = TRUE;
-  $handler->display->display_options['fields']['field_max_participants']['hide_alter_empty'] = FALSE;
-  $handler->display->display_options['fields']['field_max_participants']['type'] = 'number_unformatted';
-  $handler->display->display_options['fields']['field_max_participants']['settings'] = array(
-    'thousand_separator' => ' ',
-    'prefix_suffix' => 1,
-  );
   /* Field: timespace-id */
   $handler->display->display_options['fields']['nid_2']['id'] = 'nid_2';
   $handler->display->display_options['fields']['nid_2']['table'] = 'node';
@@ -217,58 +170,35 @@ function adefcamps_views_views_default_views() {
   $handler->display->display_options['fields']['nid_2']['label'] = '';
   $handler->display->display_options['fields']['nid_2']['exclude'] = TRUE;
   $handler->display->display_options['fields']['nid_2']['element_label_colon'] = FALSE;
-  /* Field: Taxonomy term: اللون */
-  $handler->display->display_options['fields']['field_color']['id'] = 'field_color';
-  $handler->display->display_options['fields']['field_color']['table'] = 'field_data_field_color';
-  $handler->display->display_options['fields']['field_color']['field'] = 'field_color';
-  $handler->display->display_options['fields']['field_color']['relationship'] = 'term_node_tid';
-  $handler->display->display_options['fields']['field_color']['label'] = '';
-  $handler->display->display_options['fields']['field_color']['exclude'] = TRUE;
-  $handler->display->display_options['fields']['field_color']['element_label_colon'] = FALSE;
-  $handler->display->display_options['fields']['field_color']['type'] = 'colorfield_raw_rgb';
-  $handler->display->display_options['fields']['field_color']['settings'] = array(
-    'display_hash' => 0,
+  /* Field: Content: Title */
+  $handler->display->display_options['fields']['title']['id'] = 'title';
+  $handler->display->display_options['fields']['title']['table'] = 'node';
+  $handler->display->display_options['fields']['title']['field'] = 'title';
+  $handler->display->display_options['fields']['title']['relationship'] = 'field_session_target_id';
+  $handler->display->display_options['fields']['title']['label'] = '';
+  $handler->display->display_options['fields']['title']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['title']['link_to_node'] = FALSE;
+  /* Field: workshop cell */
+  $handler->display->display_options['fields']['field_workshop']['id'] = 'field_workshop';
+  $handler->display->display_options['fields']['field_workshop']['table'] = 'field_data_field_workshop';
+  $handler->display->display_options['fields']['field_workshop']['field'] = 'field_workshop';
+  $handler->display->display_options['fields']['field_workshop']['relationship'] = 'field_session_target_id';
+  $handler->display->display_options['fields']['field_workshop']['ui_name'] = 'workshop cell';
+  $handler->display->display_options['fields']['field_workshop']['label'] = '';
+  $handler->display->display_options['fields']['field_workshop']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['field_workshop']['type'] = 'entityreference_entity_view';
+  $handler->display->display_options['fields']['field_workshop']['settings'] = array(
+    'view_mode' => 'schedule_cell',
+    'links' => 1,
   );
-  /* Field: Global: Custom text */
+  /* Field: Placeholder for Remaining Slots */
   $handler->display->display_options['fields']['nothing']['id'] = 'nothing';
   $handler->display->display_options['fields']['nothing']['table'] = 'views';
   $handler->display->display_options['fields']['nothing']['field'] = 'nothing';
+  $handler->display->display_options['fields']['nothing']['ui_name'] = 'Placeholder for Remaining Slots';
   $handler->display->display_options['fields']['nothing']['label'] = '';
   $handler->display->display_options['fields']['nothing']['alter']['text'] = '<div class="slots"></div>';
   $handler->display->display_options['fields']['nothing']['element_label_colon'] = FALSE;
-  /* Field: Content: Body */
-  $handler->display->display_options['fields']['body']['id'] = 'body';
-  $handler->display->display_options['fields']['body']['table'] = 'field_data_body';
-  $handler->display->display_options['fields']['body']['field'] = 'body';
-  $handler->display->display_options['fields']['body']['relationship'] = 'field_workshop_target_id';
-  $handler->display->display_options['fields']['body']['label'] = '';
-  $handler->display->display_options['fields']['body']['exclude'] = TRUE;
-  $handler->display->display_options['fields']['body']['element_label_colon'] = FALSE;
-  $handler->display->display_options['fields']['body']['element_wrapper_class'] = 'tooltip';
-  $handler->display->display_options['fields']['body']['hide_empty'] = TRUE;
-  $handler->display->display_options['fields']['body']['hide_alter_empty'] = FALSE;
-  /* Field: Content: مدربين */
-  $handler->display->display_options['fields']['field_trainers']['id'] = 'field_trainers';
-  $handler->display->display_options['fields']['field_trainers']['table'] = 'field_data_field_trainers';
-  $handler->display->display_options['fields']['field_trainers']['field'] = 'field_trainers';
-  $handler->display->display_options['fields']['field_trainers']['relationship'] = 'field_workshop_target_id';
-  $handler->display->display_options['fields']['field_trainers']['label'] = '';
-  $handler->display->display_options['fields']['field_trainers']['exclude'] = TRUE;
-  $handler->display->display_options['fields']['field_trainers']['element_label_colon'] = FALSE;
-  $handler->display->display_options['fields']['field_trainers']['settings'] = array(
-    'link' => 0,
-  );
-  $handler->display->display_options['fields']['field_trainers']['delta_offset'] = '0';
-  /* Field: Taxonomy term: Name */
-  $handler->display->display_options['fields']['name_1']['id'] = 'name_1';
-  $handler->display->display_options['fields']['name_1']['table'] = 'taxonomy_term_data';
-  $handler->display->display_options['fields']['name_1']['field'] = 'name';
-  $handler->display->display_options['fields']['name_1']['relationship'] = 'term_node_tid';
-  $handler->display->display_options['fields']['name_1']['label'] = '';
-  $handler->display->display_options['fields']['name_1']['alter']['alter_text'] = TRUE;
-  $handler->display->display_options['fields']['name_1']['alter']['text'] = '[body]<br/>[name_1]<br/>[field_trainers]';
-  $handler->display->display_options['fields']['name_1']['element_label_colon'] = FALSE;
-  $handler->display->display_options['fields']['name_1']['element_wrapper_class'] = 'tooltip';
   /* Field: Content: مدة */
   $handler->display->display_options['fields']['field_duration']['id'] = 'field_duration';
   $handler->display->display_options['fields']['field_duration']['table'] = 'field_data_field_duration';
@@ -281,6 +211,20 @@ function adefcamps_views_views_default_views() {
   $handler->display->display_options['fields']['field_duration']['settings'] = array(
     'thousand_separator' => ' ',
     'prefix_suffix' => 1,
+  );
+  /* Field: workshop tooltip */
+  $handler->display->display_options['fields']['field_workshop_1']['id'] = 'field_workshop_1';
+  $handler->display->display_options['fields']['field_workshop_1']['table'] = 'field_data_field_workshop';
+  $handler->display->display_options['fields']['field_workshop_1']['field'] = 'field_workshop';
+  $handler->display->display_options['fields']['field_workshop_1']['relationship'] = 'field_session_target_id';
+  $handler->display->display_options['fields']['field_workshop_1']['ui_name'] = 'workshop tooltip';
+  $handler->display->display_options['fields']['field_workshop_1']['label'] = '';
+  $handler->display->display_options['fields']['field_workshop_1']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['field_workshop_1']['element_wrapper_class'] = 'tooltip';
+  $handler->display->display_options['fields']['field_workshop_1']['type'] = 'entityreference_entity_view';
+  $handler->display->display_options['fields']['field_workshop_1']['settings'] = array(
+    'view_mode' => 'tooltip',
+    'links' => 1,
   );
   $handler->display->display_options['defaults']['sorts'] = FALSE;
   /* Sort criterion: Taxonomy term: Weight */
@@ -2170,7 +2114,6 @@ return $period_date[\'year\'] . \'-\' . $period_date[\'month\'] . \'-\' . $perio
     t('Location'),
     t('track'),
     t('<div class="slots"></div>'),
-    t('[body]<br/>[name_1]<br/>[field_trainers]'),
     t('All'),
     t('Trainers'),
     t('Content entity referenced from field_session'),

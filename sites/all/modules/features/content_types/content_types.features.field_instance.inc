@@ -678,6 +678,13 @@ function content_types_field_default_field_instances() {
         'type' => 'text_default',
         'weight' => 0,
       ),
+      'schedule_cell' => array(
+        'label' => 'hidden',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 0,
+      ),
       'teaser' => array(
         'label' => 'hidden',
         'module' => 'text',
@@ -686,6 +693,13 @@ function content_types_field_default_field_instances() {
         ),
         'type' => 'text_summary_or_trimmed',
         'weight' => 0,
+      ),
+      'tooltip' => array(
+        'label' => 'hidden',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 3,
       ),
     ),
     'entity_type' => 'node',
@@ -731,10 +745,34 @@ function content_types_field_default_field_instances() {
         'type' => 'number_integer',
         'weight' => 3,
       ),
+      'schedule_cell' => array(
+        'label' => 'above',
+        'module' => 'number',
+        'settings' => array(
+          'decimal_separator' => '.',
+          'prefix_suffix' => TRUE,
+          'scale' => 0,
+          'thousand_separator' => ' ',
+        ),
+        'type' => 'number_integer',
+        'weight' => 3,
+      ),
       'teaser' => array(
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'tooltip' => array(
+        'label' => 'above',
+        'module' => 'number',
+        'settings' => array(
+          'decimal_separator' => '.',
+          'prefix_suffix' => TRUE,
+          'scale' => 0,
+          'thousand_separator' => ' ',
+        ),
+        'type' => 'number_integer',
         'weight' => 0,
       ),
     ),
@@ -777,11 +815,35 @@ function content_types_field_default_field_instances() {
         'type' => 'number_integer',
         'weight' => 2,
       ),
+      'schedule_cell' => array(
+        'label' => 'above',
+        'module' => 'number',
+        'settings' => array(
+          'decimal_separator' => '.',
+          'prefix_suffix' => TRUE,
+          'scale' => 0,
+          'thousand_separator' => ' ',
+        ),
+        'type' => 'number_integer',
+        'weight' => 2,
+      ),
       'teaser' => array(
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
         'weight' => 0,
+      ),
+      'tooltip' => array(
+        'label' => 'above',
+        'module' => 'number',
+        'settings' => array(
+          'decimal_separator' => '.',
+          'prefix_suffix' => TRUE,
+          'scale' => 0,
+          'thousand_separator' => ' ',
+        ),
+        'type' => 'number_integer',
+        'weight' => 1,
       ),
     ),
     'entity_type' => 'node',
@@ -820,11 +882,29 @@ function content_types_field_default_field_instances() {
         'type' => 'entityreference_label',
         'weight' => 1,
       ),
+      'schedule_cell' => array(
+        'label' => 'above',
+        'module' => 'entityreference',
+        'settings' => array(
+          'link' => FALSE,
+        ),
+        'type' => 'entityreference_label',
+        'weight' => 1,
+      ),
       'teaser' => array(
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
         'weight' => 0,
+      ),
+      'tooltip' => array(
+        'label' => 'above',
+        'module' => 'entityreference',
+        'settings' => array(
+          'link' => FALSE,
+        ),
+        'type' => 'entityreference_label',
+        'weight' => 2,
       ),
     ),
     'entity_type' => 'node',
@@ -1072,6 +1152,12 @@ function content_types_field_default_field_instances() {
         'type' => 'text_default',
         'weight' => 0,
       ),
+      'schedule_cell' => array(
+        'label' => 'hidden',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
       'teaser' => array(
         'label' => 'hidden',
         'module' => 'text',
@@ -1079,6 +1165,13 @@ function content_types_field_default_field_instances() {
           'trim_length' => 600,
         ),
         'type' => 'text_summary_or_trimmed',
+        'weight' => 0,
+      ),
+      'tooltip' => array(
+        'label' => 'hidden',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
         'weight' => 0,
       ),
     ),
@@ -1102,46 +1195,6 @@ function content_types_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-workshop-field_edu_goals'
-  $field_instances['node-workshop-field_edu_goals'] = array(
-    'bundle' => 'workshop',
-    'default_value' => NULL,
-    'deleted' => 0,
-    'description' => '',
-    'display' => array(
-      'default' => array(
-        'label' => 'above',
-        'module' => 'taxonomy',
-        'settings' => array(),
-        'type' => 'taxonomy_term_reference_link',
-        'weight' => 2,
-      ),
-      'teaser' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 0,
-      ),
-    ),
-    'entity_type' => 'node',
-    'field_name' => 'field_edu_goals',
-    'label' => 'الاهداف التربوية',
-    'required' => 0,
-    'settings' => array(
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 0,
-      'module' => 'options',
-      'settings' => array(
-        'autocomplete_path' => 'taxonomy/autocomplete',
-        'size' => 60,
-      ),
-      'type' => 'options_buttons',
-      'weight' => -2,
-    ),
-  );
-
   // Exported field_instance: 'node-workshop-field_max_participants'
   $field_instances['node-workshop-field_max_participants'] = array(
     'bundle' => 'workshop',
@@ -1161,11 +1214,23 @@ function content_types_field_default_field_instances() {
         'type' => 'number_integer',
         'weight' => 4,
       ),
+      'schedule_cell' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 4,
+      ),
       'teaser' => array(
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
         'weight' => 0,
+      ),
+      'tooltip' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 4,
       ),
     ),
     'entity_type' => 'node',
@@ -1211,11 +1276,23 @@ function content_types_field_default_field_instances() {
         'type' => 'number_integer',
         'weight' => 5,
       ),
+      'schedule_cell' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 5,
+      ),
       'teaser' => array(
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
         'weight' => 0,
+      ),
+      'tooltip' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 5,
       ),
     ),
     'entity_type' => 'node',
@@ -1238,53 +1315,6 @@ function content_types_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-workshop-field_tech_field'
-  $field_instances['node-workshop-field_tech_field'] = array(
-    'bundle' => 'workshop',
-    'default_value' => NULL,
-    'deleted' => 0,
-    'description' => '',
-    'display' => array(
-      'default' => array(
-        'label' => 'above',
-        'module' => 'taxonomy',
-        'settings' => array(),
-        'type' => 'taxonomy_term_reference_link',
-        'weight' => 1,
-      ),
-      'teaser' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 0,
-      ),
-    ),
-    'entity_type' => 'node',
-    'field_name' => 'field_tech_field',
-    'label' => 'المجال',
-    'required' => 0,
-    'settings' => array(
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 1,
-      'module' => 'options',
-      'settings' => array(
-        'cascading_selection' => 0,
-        'filter_view' => '',
-        'leaves_only' => 0,
-        'max_depth' => '',
-        'parent_term_id' => '',
-        'select_parents' => 0,
-        'start_minimized' => 0,
-        'token_display' => '',
-        'track_list' => 0,
-      ),
-      'type' => 'options_select',
-      'weight' => -3,
-    ),
-  );
-
   // Exported field_instance: 'node-workshop-field_trainers'
   $field_instances['node-workshop-field_trainers'] = array(
     'bundle' => 'workshop',
@@ -1301,11 +1331,23 @@ function content_types_field_default_field_instances() {
         'type' => 'entityreference_label',
         'weight' => 3,
       ),
+      'schedule_cell' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 3,
+      ),
       'teaser' => array(
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
         'weight' => 0,
+      ),
+      'tooltip' => array(
+        'label' => 'inline',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 3,
       ),
     ),
     'entity_type' => 'node',
@@ -1325,103 +1367,6 @@ function content_types_field_default_field_instances() {
       ),
       'type' => 'entityreference_autocomplete',
       'weight' => 0,
-    ),
-  );
-
-  // Exported field_instance: 'taxonomy_term-educational_goals-field_icon'
-  $field_instances['taxonomy_term-educational_goals-field_icon'] = array(
-    'bundle' => 'educational_goals',
-    'deleted' => 0,
-    'description' => '',
-    'display' => array(
-      'default' => array(
-        'label' => 'above',
-        'module' => 'image',
-        'settings' => array(
-          'image_link' => '',
-          'image_style' => '',
-        ),
-        'type' => 'image',
-        'weight' => 0,
-      ),
-      'icon' => array(
-        'label' => 'hidden',
-        'module' => 'image',
-        'settings' => array(
-          'image_link' => '',
-          'image_style' => 'icon_small',
-        ),
-        'type' => 'image',
-        'weight' => 0,
-      ),
-    ),
-    'entity_type' => 'taxonomy_term',
-    'field_name' => 'field_icon',
-    'label' => 'الايقونة',
-    'required' => 0,
-    'settings' => array(
-      'alt_field' => 0,
-      'default_image' => 0,
-      'file_directory' => 'images/icons',
-      'file_extensions' => 'png gif jpg jpeg',
-      'max_filesize' => '',
-      'max_resolution' => '',
-      'min_resolution' => '32x32',
-      'title_field' => 0,
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 1,
-      'module' => 'image',
-      'settings' => array(
-        'preview_image_style' => 'thumbnail',
-        'progress_indicator' => 'throbber',
-      ),
-      'type' => 'image_image',
-      'weight' => 1,
-    ),
-  );
-
-  // Exported field_instance: 'taxonomy_term-fields-field_color'
-  $field_instances['taxonomy_term-fields-field_color'] = array(
-    'bundle' => 'fields',
-    'default_value' => NULL,
-    'deleted' => 0,
-    'description' => '',
-    'display' => array(
-      'default' => array(
-        'label' => 'above',
-        'module' => 'colorfield',
-        'settings' => array(
-          'height' => 20,
-          'width' => 20,
-        ),
-        'type' => 'colorfield_color_swatch',
-        'weight' => 0,
-      ),
-    ),
-    'entity_type' => 'taxonomy_term',
-    'field_name' => 'field_color',
-    'label' => 'اللون',
-    'required' => 0,
-    'settings' => array(
-      'colorfield_colorpicker_type' => 'farbtastic',
-      'colorfield_enable_colorpicker' => TRUE,
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 1,
-      'module' => 'colorfield',
-      'settings' => array(
-        'colorfield_colorpicker_type' => 'farbtastic',
-        'colorfield_enable_colorpicker' => TRUE,
-        'colorfield_options' => array(
-          'colorfield_colorpicker_type' => 'farbtastic',
-          'colorfield_enable_colorpicker' => 1,
-        ),
-      ),
-      'type' => 'colorfield_unified_textfield',
-      'weight' => 1,
     ),
   );
 
@@ -1533,12 +1478,8 @@ function content_types_field_default_field_instances() {
   t('Body');
   t('اقصى عدد للمشاركين');
   t('الاسم الكامل');
-  t('الاهداف التربوية');
-  t('الايقونة');
   t('البلد');
   t('الجنس');
-  t('اللون');
-  t('المجال');
   t('المجموعة');
   t('المشارك');
   t('الهدف التربوي');
