@@ -30,6 +30,15 @@ function content_types_ds_view_modes_info() {
 
   $ds_view_mode = new stdClass();
   $ds_view_mode->api_version = 1;
+  $ds_view_mode->view_mode = 'registration_cell';
+  $ds_view_mode->label = 'خانة تسجيل';
+  $ds_view_mode->entities = array(
+    'node' => 'node',
+  );
+  $export['registration_cell'] = $ds_view_mode;
+
+  $ds_view_mode = new stdClass();
+  $ds_view_mode->api_version = 1;
   $ds_view_mode->view_mode = 'schedule_cell';
   $ds_view_mode->label = 'خانة جدول';
   $ds_view_mode->entities = array(
