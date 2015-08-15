@@ -5,7 +5,6 @@
   $().ready(function () {
     //prepare sessions interaction
     Drupal.adefCamps.formatSchedule('#available-sessions .view-content', 2, adefCampsDaysToShow, adefCampsStartDate);
-    $('.tooltip').hide();
     $('.session').mouseover(function () {
       if (getClassByPrefix($(this), 'id-') == 'id-') {
         return;
@@ -15,15 +14,11 @@
         $('.' + getClassByPrefix($(this), 'w-')).not('.' + getClassByPrefix($(this), 'id-')).addClass('required');
       }
       $(this).removeClass('repeated');
-      if (!$(this).hasClass('disabled')) {
-        $(this).children('.tooltip').show().children().show();
-      }
     }).mouseleave(function () {
       $('.' + getClassByPrefix($(this), 'id-')).removeClass('repeated');
       if ((!$(this).hasClass('selected')) && $('.' + getClassByPrefix($(this), 'w-') + '.selected').length == 0) {
         $('.' + getClassByPrefix($(this), 'w-')).removeClass('required');
       }
-      $(this).children('.tooltip').hide();
     }).click(function () {
       if (getClassByPrefix($(this), 'id-') == 'id-') {
         return;
