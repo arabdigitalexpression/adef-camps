@@ -15,6 +15,7 @@ dependencies[] = date_views
 dependencies[] = dblog
 dependencies[] = ds
 dependencies[] = ds_extras
+dependencies[] = ds_format
 dependencies[] = ds_ui
 dependencies[] = dynamic_select
 dependencies[] = entity
