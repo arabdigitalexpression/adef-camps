@@ -18,7 +18,7 @@ function adef_camps_site_settings_default_rules_configuration() {
       "ON" : { "user_insert" : [] },
       "DO" : [
         { "mail_to_users_of_role" : {
-            "roles" : { "value" : { "7" : "7" } },
+            "roles" : { "value" : { "112438630" : "112438630" } },
             "subject" : "Adef Camps new user",
             "message" : "A new account [account:name] was created for [account:mail]. View it by following this link [account:url]"
           }

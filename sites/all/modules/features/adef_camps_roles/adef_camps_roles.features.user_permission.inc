@@ -1487,9 +1487,7 @@ function adef_camps_roles_user_default_permissions() {
     'name' => 'view field_related_user',
     'roles' => array(
       'administrator' => 'administrator',
-      'authenticated user' => 'authenticated user',
       'مدير مستخدمين' => 'مدير مستخدمين',
-      'مشارك' => 'مشارك',
     ),
     'module' => 'field_permissions',
   );
@@ -1555,9 +1553,7 @@ function adef_camps_roles_user_default_permissions() {
     'name' => 'view own field_related_user',
     'roles' => array(
       'administrator' => 'administrator',
-      'authenticated user' => 'authenticated user',
       'مدير مستخدمين' => 'مدير مستخدمين',
-      'مشارك' => 'مشارك',
     ),
     'module' => 'field_permissions',
   );

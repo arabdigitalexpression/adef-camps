@@ -351,27 +351,6 @@ function adef_camps_site_settings_strongarm() {
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
-  $strongarm->name = 'site_mail';
-  $strongarm->value = 'noreply@register.adefcamps.org';
-  $export['site_mail'] = $strongarm;
-
-  $strongarm = new stdClass();
-  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
-  $strongarm->api_version = 1;
-  $strongarm->name = 'site_name';
-  $strongarm->value = 'معسكرات التعبير الرقمي';
-  $export['site_name'] = $strongarm;
-
-  $strongarm = new stdClass();
-  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
-  $strongarm->api_version = 1;
-  $strongarm->name = 'site_slogan';
-  $strongarm->value = '';
-  $export['site_slogan'] = $strongarm;
-
-  $strongarm = new stdClass();
-  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
-  $strongarm->api_version = 1;
   $strongarm->name = 'theme_camps_settings';
   $strongarm->value = array(
     'toggle_logo' => 1,
