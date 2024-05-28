@@ -7,3 +7,9 @@ sites/*/settings*.php
 # Ignore paths that contain user-generated content.
 sites/*/files
 sites/*/private
+
+# Ignore environment variables file
+.env
+
+# Ignore database dumps
+*/*.sql

@@ -1,0 +1,50 @@
+# Use the official PHP image with Debian Buster as the base image
+FROM php:5.6-apache
+
+# Update package repository to use Debian Buster
+RUN sed -i 's/stretch/buster/g' /etc/apt/sources.list
+
+# Install gnupg and necessary packages
+RUN apt-get update && apt-get install -y --allow-unauthenticated gnupg
+
+# Add the public keys for the Debian repositories
+RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 112695A0E562B32A 54404762BBB6E853 648ACFD622F3D138 0E98404D386FA1D9 DCC9EFBF77E11517
+
+# Install necessary packages and enable PHP extensions
+RUN apt-get update && apt-get install -y --allow-unauthenticated \
+    libpng-dev \
+    libjpeg-dev \
+    libfreetype6-dev \
+    pkg-config \
+    wget \
+    unzip
+
+# Configure GD extension with pkg-config for FreeType and install PHP extensions
+RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install gd \
+    && docker-php-ext-install mysqli pdo pdo_mysql
+
+# Enable Apache mod_rewrite
+RUN a2enmod rewrite
+
+# Set the working directory
+WORKDIR /var/www/html
+
+# Copy the current directory contents into the container at /var/www/html, excluding db_dumps directory
+COPY --chown=www-data:www-data . /var/www/html
+RUN rm -rf /var/www/html/db_dumps
+
+# Ensure proper permissions for directories and files
+RUN find /var/www/html -type d -exec chmod 755 {} \; \
+    && find /var/www/html -type f -exec chmod 644 {} \;
+
+# Run the script to create settings.php with database configuration
+RUN chmod +x /var/www/html/create_settings.sh
+RUN /var/www/html/create_settings.sh
+
+# Expose port 80
+EXPOSE 80
+
+# Start Apache server
+CMD ["apache2-foreground"]
+

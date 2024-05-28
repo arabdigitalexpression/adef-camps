@@ -1,0 +1,6 @@
+# Use the official MySQL image as a base
+FROM mysql:5.7
+
+# Copy the database dump file into the container
+COPY db_dumps/campsystem_2017-08-22.sql /docker-entrypoint-initdb.d/
+
