@@ -2,5 +2,5 @@
 FROM mysql:5.7
 
 # Copy the database dump file into the container
-COPY db_dumps/campsystem_2017-08-22.sql /docker-entrypoint-initdb.d/
+COPY db_dumps/*.sql /docker-entrypoint-initdb.d/
 
